@@ -32,6 +32,7 @@ var $titleList = $("nav");
 var $localSearchResult = $("#local-search-result")
 var isFullScreen = $(window).width() <= 1024
 var isFriend = false
+var isPhoto = false
 var shortcutKey = $('#theme_shortcut').val() !== 'false'
 $(document).pjax('.nav-right nav a,.nav-left .avatar_target,.site_url', '.pjax', {fragment: '.pjax', timeout: 8000});
 $(document).on({
@@ -106,6 +107,7 @@ function afterPjax() {
 /*切换文章分类*/
 $(".nav-left ul li>div").on("click", function (e) {
     $('.friend').removeClass('friend'); // 如果当前正在友链页，则先回显
+    $('.photo').removeClass('photo'); // 如果当前正在友链页，则先回显
     $(".nav-left li>div.active").removeClass("active");
     $(this).addClass("active");
     $searchInput.val("").change();
@@ -172,7 +174,7 @@ if (shortcutKey) {
         if (!$searchInput.is(":focus") && !$tagSearchInput.is(':focus') && !$('#comments textarea').is(':focus')) {
             if (e.which === 83) { /* S - 显示/隐藏文章列表 */
                 $fullBtn.trigger("click");
-            } else if ((e.which === 73 || e.which === 105) && ($(".nav").css('margin-left')==='0px') && !$('.title-list').hasClass('friend')) { /* I */
+            } else if ((e.which === 73 || e.which === 105) && ($(".nav").css('margin-left') === '0px') && !$('.title-list').hasClass('friend') && !$('.title-list').hasClass('photo')) { /* I */
                 inputChange()
             } else if (e.which === 87) { /* W - 切换大纲视图 */
                 if ($outlineList.is(':visible')) {
@@ -196,6 +198,9 @@ if (shortcutKey) {
                 // 如果在友链界面，则推出友链
                 if (isFriend) {
                     $('.friends-area .icon-left').trigger('click')
+                }
+                if (isPhoto) {
+                    $('.photos-area .icon-left').trigger('click')
                 }
 
             } else if (e.which === 74 || e.which === 75) { /* J K - 上滑/下滑*/
@@ -601,6 +606,17 @@ $(function () {
     $('.friends-area .icon-left').on('click', function () {
         isFriend = false
         $('.friends-area,.title-list').removeClass('friend');
+    })
+
+    /*相册链接*/
+    $('.photos').on('click', function () {
+        isPhoto = !isPhoto
+        $('.photos-area,.title-list').toggleClass('photo');
+    })
+    /* 退出友情链接 */
+    $('.photos-area .icon-left').on('click', function () {
+        isPhoto = false
+        $('.photos-area,.title-list').removeClass('photo');
     })
 });
 

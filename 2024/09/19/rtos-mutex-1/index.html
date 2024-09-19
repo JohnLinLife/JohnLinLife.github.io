@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>John Life</title>
+  <title>FreeRTOS笔记-互斥量 | John Life</title>
   <meta name="keywords" content="">
-  <meta name="description" content="John Life">
+  <meta name="description" content="FreeRTOS笔记-互斥量 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="���� ����ͼƬ">
 <meta property="og:type" content="website">
@@ -58,7 +58,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -325,18 +325,57 @@
 
     </div>
     <div class="hide-list">
-        <div class="semicircle" data-title="切换全屏 快捷键 s">
+        <div class="semicircle" data-title="Toggle full screen shortcut key s">
             <div class="brackets first"><</div>
             <div class="brackets">&gt;</div>
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-rtos-mutex-1" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2"><span class="toc-text">欢迎来到我的博客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E5%8D%9A%E5%AE%A2%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">对博客的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99"><span class="toc-text">关于本站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0"><span class="toc-text">博客平台</span></a></li></ol></li></ol>
+        <h1 class="article-title">FreeRTOS笔记-互斥量</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="STM32">STM32</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-09-19 13:50:47'>2024-09-19 13:38</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%87%8F"><span class="toc-text">互斥量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%92%E6%96%A5%E9%87%8F%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">对互斥量的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%92%E6%96%A5%E9%87%8F%E7%9A%84%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8"><span class="toc-text">对互斥量的常规使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E9%94%81"><span class="toc-text">递归锁</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -349,36 +388,53 @@
     }
 </style>
 </div>
-            <h1 id="欢迎来到我的博客"><a href="#欢迎来到我的博客" class="headerlink" title="欢迎来到我的博客"></a>欢迎来到我的博客</h1><h2 id="对博客的理解"><a href="#对博客的理解" class="headerlink" title="对博客的理解"></a>对博客的理解</h2><p>喜欢写Blog的人，会经历三个阶段。</p>
-<blockquote>
-<p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。</p>
-</blockquote>
-<blockquote>
-<p>第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。</p>
-</blockquote>
-<blockquote>
-<p>第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
-</blockquote>
-<p>我们每个人的在网络上产生的数据越来越多，这些信息是我们在互联网上存在过的痕迹，值得我们认真对待。但是它们被分散分布在各个网站上。很多时候我们很难将它们聚合在一起，而且各个网站的信息排布方式也没有办法自由控制，所以我们需要一个可以由自己主宰的空间——博客。</p>
-<p>通过博客，我们可以记录自己的生活和成长的轨迹。它不像 Twitter 那样碎片化，也不像 Facebook 那样关系化，它是私人的空间。</p>
-<h2 id="关于本站"><a href="#关于本站" class="headerlink" title="关于本站"></a>关于本站</h2><p><strong>JohnLinLife</strong> 是本人的个人站。</p>
-<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
-<p>本站访问人数：<code class="site_uv"></code>人次 ， 访问量：<code class="site_pv"></code>次</p>
-<h2 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h2><p>这个博客通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> 生成，部署在 <a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a>主题 <a target="_blank" rel="noopener" href="https://github.com/yelog/hexo-theme-3-hexo">3-hexo</a> 已经在github上开源</p>
-<p>主要功能：</p>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h1><h2 id="对互斥量的理解"><a href="#对互斥量的理解" class="headerlink" title="对互斥量的理解"></a>对互斥量的理解</h2><p>二进制信号量的互斥，容易导致死锁。即一个任务锁住后继续运行，在运行过程中再次请求解锁，导致后续没解锁信息无法继续下去，造成死锁。</p>
 <ul>
-<li>搜索支持文章标题、标签(#标签)、作者(@作者)</li>
-<li>pad&#x2F;手机等移动端适配</li>
-<li>页面全局快捷键 <a target="_blank" rel="noopener" href='http://yelog.org/2017/03/24/3-hexo-shortcuts/'>3-hexo快捷键说明</a></li>
+<li>比喻：	我要有工作经验的（锁住直到有工作经验的来才给工作）</li>
+<li>我要工作才能有工作经验（请求工作不成功，不运行不达到条件)</li>
 </ul>
+<p><strong>递归锁</strong>：类似于嵌套，锁中锁 。</p>
+<h2 id="对互斥量的常规使用"><a href="#对互斥量的常规使用" class="headerlink" title="对互斥量的常规使用"></a>对互斥量的常规使用</h2><p>互斥量创建。与信号量一样的句柄创建，函数运行后，初始值为1，不需要手动赋值。代码展示了创建串口通信1互斥量的代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_USART1 = xSemaphoreCreateMutex();</span><br></pre></td></tr></table></figure>
+<p>跟二进制信号量一样的赋值方法，give和take即可对锁进行操作。<br>但是二进制信号量的互斥锁会导致优先级反转，即高优先级任务在监测到互斥锁锁住时进入阻塞状态放弃CPU资源，低优先级的任务进行运行，如果低优先级的任务不放弃CPU资源，高优先级的任务便不能执行。为了解决这个问题，我们引入了互斥量优先级继承的功能。</p>
+<p><strong>优先级继承功能</strong>：<br>Mutex有着优先级继承的属性，在高优先级的任务获取锁失败以后，<br>会将该高优先级任务的优先级赋给上锁的任务运行，即上锁的任务继承了高优先级任务的优先级。<br>当低优先级的任务放弃CPU资源时，重新给回高优先级任务继续运行，低优先级任务不再抢占高优先级任务，避免了优先级反转。</p>
+<blockquote>
+<p><strong>互斥量的缺陷</strong>：<br>互斥量任何任务都可以对这个锁进行解锁，如果出现了其他任务强行解锁该锁就不能正常用了。这个使用引入递归锁。</p>
+</blockquote>
+<hr>
+<h2 id="递归锁"><a href="#递归锁" class="headerlink" title="递归锁"></a>递归锁</h2><p>递归锁的创建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_USART1 = xSemaphoreCreateRecursiveMutex();</span><br></pre></td></tr></table></figure>
+<p>递归锁的读取和释放</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreTakeRecursive(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">xSemaphoreGiveRecursive(Semaphore_Handle_USART1);</span><br></pre></td></tr></table></figure>
+<p>递归锁的可嵌套性,在任务中得到了锁的使用权，那么在里面任然拥有该权限，可以嵌套上锁。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void Task3Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	int i;</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		xSemaphoreTakeRecursive(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">		printf(&quot;task3 is running\r\n&quot;);</span><br><span class="line">		for(i = 0; i &lt; 10; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			xSemaphoreTakeRecursive(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">			printf(&quot;task3 is running loop times:%d\r\n&quot;, i);</span><br><span class="line">			xSemaphoreGiveRecursive(Semaphore_Handle_USART1);</span><br><span class="line">		&#125;</span><br><span class="line">		xSemaphoreGiveRecursive(Semaphore_Handle_USART1);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-        </article>
-        
-        <p>
-            <a  class="dashang" onclick="dashangToggle()">赏</a>
-        </p>
-        
-        
+
+
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">💰</a>
+</p>
+
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -387,11 +443,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="Toggle full screen shortcut key s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="Toggle full screen shortcut key s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 <div class="hide_box" onclick="dashangToggle()"></div>

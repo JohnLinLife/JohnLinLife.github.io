@@ -2,19 +2,23 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>我的第一个blog | John Life</title>
+  <title>FreeRTOS笔记-信号量 | John Life</title>
   <meta name="keywords" content="">
-  <meta name="description" content="我的第一个blog | John Life">
+  <meta name="description" content="FreeRTOS笔记-信号量 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="���� ����ͼƬ">
 <meta property="og:type" content="website">
 <meta property="og:title" content="photo">
 <meta property="og:url" content="http://example.com/photo/index.html">
 <meta property="og:site_name" content="John Life">
+<meta property="og:description" content="���� ����ͼƬ">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/photo/1.jpg">
 <meta property="article:published_time" content="2024-09-18T15:04:30.000Z">
-<meta property="article:modified_time" content="2024-09-18T15:04:30.825Z">
+<meta property="article:modified_time" content="2024-09-19T05:51:11.013Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/photo/1.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -155,7 +159,7 @@
         <div data-rel="STM32">
             
             STM32
-            <small>(1)</small>
+            <small>(2)</small>
         </div>
         
     </li>
@@ -277,38 +281,38 @@
         
         
         <a  class="All STM32 "
-           href="/2024/09/18/202491801/"
+           href="/2024/09/19/rtos-mutex-1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="FreeRTOS笔记-互斥量">FreeRTOS笔记-互斥量</span>
+            <span class="post-date" title="2024-09-19 13:38:19">2024/09/19</span>
+        </a>
+        
+        
+        <a  class="All STM32 "
+           href="/2024/06/18/202491801/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="FreeRTOS笔记-信号量">FreeRTOS笔记-信号量</span>
-            <span class="post-date" title="2024-09-18 23:32:43">2024/09/18</span>
+            <span class="post-date" title="2024-06-18 23:32:43">2024/06/18</span>
         </a>
         
         
         <a  class="All 其他开发 "
-           href="/2024/09/18/Test/"
+           href="/2024/06/18/Test/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="Hexo使用教程">Hexo使用教程</span>
-            <span class="post-date" title="2024-09-18 23:26:56">2024/09/18</span>
+            <span class="post-date" title="2024-06-18 23:26:56">2024/06/18</span>
         </a>
         
         
         <a  class="All 奇思 "
-           href="/2024/09/18/My-First-Blog/"
+           href="/2024/06/18/My-First-Blog/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="我的第一个blog">我的第一个blog</span>
-            <span class="post-date" title="2024-09-18 16:42:32">2024/09/18</span>
-        </a>
-        
-        
-        <a  class="All "
-           href="/2024/09/18/hello-world/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="Hello World">Hello World</span>
-            <span class="post-date" title="2024-09-18 16:28:19">2024/09/18</span>
+            <span class="post-date" title="2024-06-18 16:42:32">2024/06/18</span>
         </a>
         
         <div id="no-item-tips">
@@ -329,9 +333,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-My-First-Blog" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-202491801" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">我的第一个blog</h1>
+        <h1 class="article-title">FreeRTOS笔记-信号量</h1>
     
     <div class="article-meta">
         
@@ -341,7 +345,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="奇思">奇思</a>
+            <a  data-rel="STM32">STM32</a>
             
         </span>
         
@@ -349,7 +353,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-18 23:14:47'>2024-09-18 16:42</time>
+            Created At : <time class="date" title='Updated At: 2024-09-19 13:36:54'>2024-06-18 23:32</time>
         
     </div>
     <div class="article-meta">
@@ -371,7 +375,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2"><span class="toc-text">初次见面</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="toc-text">信号量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">信号量基本使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5"><span class="toc-text">使用信号量实现同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-text">使用信号量实现互斥锁</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -387,7 +391,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="初次见面"><a href="#初次见面" class="headerlink" title="初次见面"></a>初次见面</h2><p>大家好呀，这是本web的第一个blog，谢谢关照。</p>
+        <h1 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h1><h2 id="信号量基本使用方法"><a href="#信号量基本使用方法" class="headerlink" title="信号量基本使用方法"></a>信号量基本使用方法</h2><p>信号量句柄定义</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SemaphoreHandle_t Semaphore_Handle_1;</span><br></pre></td></tr></table></figure>
+
+<p>信号量创建，前面句柄创建，第一个变量为信号量的最大容量，第二个为初始数值</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_1 = xSemaphoreCreateCounting(10, 0);	</span><br></pre></td></tr></table></figure>
+
+<p>信号量添加，添加完成后，信号量的数值加1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreGive(Semaphore_Handle_1);</span><br></pre></td></tr></table></figure>
+
+<p>信号量读取，即信号量减少，使用portMAX_DELAY后，在读取到才继续运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreTake(Semaphore_Handle_1, portMAX_DELAY);</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="使用信号量实现同步"><a href="#使用信号量实现同步" class="headerlink" title="使用信号量实现同步"></a>使用信号量实现同步</h2><p>同步：即在信号量give后，就能进行take，实现任务的同步，例如在计算完成后才进行take后续的任务，两个任务就实现了同步。</p>
+<p>实验现象：当不通过信号量来进行输出时，并没有及时地对结果进行输出，说明任务没有进行同步，在任务调度中可能错过信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">void Task2Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	int sum;</span><br><span class="line">	while (1)</span><br><span class="line">	&#123;</span><br><span class="line">		flag = 0;</span><br><span class="line">		xSemaphoreTake(Semaphore_Handle_1, portMAX_DELAY)</span><br><span class="line">		printf(&quot;task2 is running\r\n&quot;);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Task3Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		if（flag = 1）</span><br><span class="line">			printf(&quot;task3 is running\r\n&quot;);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="使用信号量实现互斥锁"><a href="#使用信号量实现互斥锁" class="headerlink" title="使用信号量实现互斥锁"></a>使用信号量实现互斥锁</h2><p>互斥：两个任务不能同时进行，即对功能运行的完整性进行保证，避免冲突<br>创建二进制信号量，初始值为0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_USART1 = xSemaphoreCreateBinary();</span><br></pre></td></tr></table></figure>
+<p>给二进制信号量赋1，标志着该临界资源空闲可以使用，例为串口1的使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreGive(Semaphore_Handle_USART1);</span><br></pre></td></tr></table></figure>
+
+<p>如下是互斥锁的使用，两个任务使用一个串口，而不会导致输出过程相互冲突。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void Task2Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	int sum;</span><br><span class="line">	while (1)</span><br><span class="line">	&#123;</span><br><span class="line">		xSemaphoreTake(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">		printf(&quot;task2 is running\r\n&quot;);</span><br><span class="line">		xSemaphoreGive(Semaphore_Handle_USART1);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Task3Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		xSemaphoreTake(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">		printf(&quot;task3 is running\r\n&quot;);</span><br><span class="line">		xSemaphoreGive(Semaphore_Handle_USART1);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>

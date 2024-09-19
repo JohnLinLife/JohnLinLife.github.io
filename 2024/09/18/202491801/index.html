@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>202491801 | John Life</title>
+  <title>FreeRTOS笔记-信号量 | John Life</title>
   <meta name="keywords" content="">
-  <meta name="description" content="202491801 | John Life">
+  <meta name="description" content="FreeRTOS笔记-信号量 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="photo">
@@ -152,6 +152,36 @@
             
                 
     <li>
+        <div data-rel="STM32">
+            
+            STM32
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="其他开发">
+            
+            其他开发
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
         <div data-rel="奇思">
             
             奇思
@@ -168,9 +198,9 @@
     <div class="menus">
         
             
-                <a class="dynamic-menu "
+                <a class="dynamic-menu site_url"
                    
-                   href="">相册</a>
+                   href="/photo">相册</a>
         
             
                 <a class="dynamic-menu "
@@ -246,16 +276,16 @@
     <nav id="title-list-nav">
         
         
-        <a id="top" class="All "
+        <a  class="All STM32 "
            href="/2024/09/18/202491801/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="202491801">202491801</span>
+            <span class="post-title" title="FreeRTOS笔记-信号量">FreeRTOS笔记-信号量</span>
             <span class="post-date" title="2024-09-18 23:32:43">2024/09/18</span>
         </a>
         
         
-        <a  class="All "
+        <a  class="All 其他开发 "
            href="/2024/09/18/Test/"
            data-tag=""
            data-author="" >
@@ -301,19 +331,25 @@
     <div class="pjax">
         <article id="post-202491801" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">202491801</h1>
+        <h1 class="article-title">FreeRTOS笔记-信号量</h1>
     
     <div class="article-meta">
         
-        <span class="top"><a>pin to top</a></span>
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="STM32">STM32</a>
+            
+        </span>
         
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-18 23:32:43'>2024-09-18 23:32</time>
+            Created At : <time class="date" title='Updated At: 2024-09-19 11:26:37'>2024-09-18 23:32</time>
         
     </div>
     <div class="article-meta">
@@ -335,7 +371,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%A0%87%E9%A2%98"><span class="toc-text">输入标题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8F%E6%A0%87%E9%A2%98"><span class="toc-text">小标题</span></a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="toc-text">信号量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">信号量基本使用方法</span></a>
     
 <style>
     .left-col .switch-btn,
@@ -351,7 +387,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="输入标题"><a href="#输入标题" class="headerlink" title="输入标题"></a>输入标题</h2><h1 id="小标题"><a href="#小标题" class="headerlink" title="小标题"></a>小标题</h1><p>输入文字</p>
+        <h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><h1 id="信号量基本使用方法"><a href="#信号量基本使用方法" class="headerlink" title="信号量基本使用方法"></a>信号量基本使用方法</h1><p>信号量句柄定义</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SemaphoreHandle_t Semaphore_Handle_1;</span><br></pre></td></tr></table></figure>
+
+<p>信号量创建，前面句柄创建，第一个变量为信号量的最大容量，第二个为初始数值</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_1 = xSemaphoreCreateCounting(10, 0);	</span><br></pre></td></tr></table></figure>
+
+<p>信号量添加，添加完成后，信号量的数值加1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreGive(Semaphore_Handle_1);</span><br></pre></td></tr></table></figure>
+
+<p>信号量读取，即信号量减少，使用portMAX_DELAY后，在读取到才继续运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreTake(Semaphore_Handle_1, portMAX_DELAY);</span><br></pre></td></tr></table></figure>
+
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>
@@ -567,7 +614,7 @@
 <div class="mobile-menus">
     
     
-    <a class="dynamic-menu "   href="">相册</a>
+    <a class="dynamic-menu site_url"   href="/photo">相册</a>
     
     
     <a class="dynamic-menu " target="_self"   href="/next">动态菜单1</a>

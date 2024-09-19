@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>FreeRTOS笔记-互斥量 | John Life</title>
-  <meta name="keywords" content=" RTOS ">
-  <meta name="description" content="FreeRTOS笔记-互斥量 | John Life">
+  <title>makedown基础教程 | John Life</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="makedown基础教程 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="test">
 <meta property="og:type" content="website">
@@ -401,9 +401,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-rtos-mutex-1" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-makedown-book" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">FreeRTOS笔记-互斥量</h1>
+        <h1 class="article-title">makedown基础教程</h1>
     
     <div class="article-meta">
         
@@ -413,27 +413,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="STM32">STM32</a>
+            <a  data-rel="其他开发">其他开发</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color5">RTOS</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-09-19 17:17:14'>2024-09-19 16:39</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-19 15:15:24'>2024-09-19 13:38</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:623</span>
+        <span>Count:124</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -452,7 +445,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%87%8F"><span class="toc-text">互斥量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%92%E6%96%A5%E9%87%8F%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">对互斥量的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%92%E6%96%A5%E9%87%8F%E7%9A%84%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8"><span class="toc-text">对互斥量的常规使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E9%94%81"><span class="toc-text">递归锁</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#makedown%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91%E6%95%99%E7%A8%8B"><span class="toc-text">makedown文件编辑教程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E7%BA%A7%E6%A0%87%E9%A2%98"><span class="toc-text">一级标题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E6%A0%87%E9%A2%98"><span class="toc-text">小标题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E6%A0%87%E9%A2%98"><span class="toc-text">小小标题</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -468,29 +461,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h1><h2 id="对互斥量的理解"><a href="#对互斥量的理解" class="headerlink" title="对互斥量的理解"></a>对互斥量的理解</h2><p>二进制信号量的互斥，容易导致死锁。即一个任务锁住后继续运行，在运行过程中再次请求解锁，导致后续没解锁信息无法继续下去，造成死锁。</p>
-<ul>
-<li>比喻：	我要有工作经验的（锁住直到有工作经验的来才给工作）</li>
-<li>我要工作才能有工作经验（请求工作不成功，不运行不达到条件)</li>
-</ul>
-<p><strong>递归锁</strong>：类似于嵌套，锁中锁 。</p>
-<h2 id="对互斥量的常规使用"><a href="#对互斥量的常规使用" class="headerlink" title="对互斥量的常规使用"></a>对互斥量的常规使用</h2><p>互斥量创建。与信号量一样的句柄创建，函数运行后，初始值为1，不需要手动赋值。代码展示了创建串口通信1互斥量的代码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_USART1 = xSemaphoreCreateMutex();</span><br></pre></td></tr></table></figure>
-<p>跟二进制信号量一样的赋值方法，give和take即可对锁进行操作。<br>但是二进制信号量的互斥锁会导致优先级反转，即高优先级任务在监测到互斥锁锁住时进入阻塞状态放弃CPU资源，低优先级的任务进行运行，如果低优先级的任务不放弃CPU资源，高优先级的任务便不能执行。为了解决这个问题，我们引入了互斥量优先级继承的功能。</p>
-<p><strong>优先级继承功能</strong>：<br>Mutex有着优先级继承的属性，在高优先级的任务获取锁失败以后，<br>会将该高优先级任务的优先级赋给上锁的任务运行，即上锁的任务继承了高优先级任务的优先级。<br>当低优先级的任务放弃CPU资源时，重新给回高优先级任务继续运行，低优先级任务不再抢占高优先级任务，避免了优先级反转。</p>
-<blockquote>
-<p><strong>互斥量的缺陷</strong>：<br>互斥量任何任务都可以对这个锁进行解锁，如果出现了其他任务强行解锁该锁就不能正常用了。这个使用引入递归锁。</p>
-</blockquote>
+        <h1 id="makedown文件编辑教程"><a href="#makedown文件编辑教程" class="headerlink" title="makedown文件编辑教程"></a>makedown文件编辑教程</h1><hr>
+<p>本文档效果展示。格式为效果＋代码</p>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 输入标题</span><br></pre></td></tr></table></figure>
 <hr>
-<h2 id="递归锁"><a href="#递归锁" class="headerlink" title="递归锁"></a>递归锁</h2><p>递归锁的创建</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_USART1 = xSemaphoreCreateRecursiveMutex();</span><br></pre></td></tr></table></figure>
-<p>递归锁的读取和释放</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreTakeRecursive(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">xSemaphoreGiveRecursive(Semaphore_Handle_USART1);</span><br></pre></td></tr></table></figure>
-<p>递归锁的可嵌套性,在任务中得到了锁的使用权，那么在里面任然拥有该权限，可以嵌套上锁。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void Task3Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	int i;</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		xSemaphoreTakeRecursive(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">		printf(&quot;task3 is running\r\n&quot;);</span><br><span class="line">		for(i = 0; i &lt; 10; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			xSemaphoreTakeRecursive(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">			printf(&quot;task3 is running loop times:%d\r\n&quot;, i);</span><br><span class="line">			xSemaphoreGiveRecursive(Semaphore_Handle_USART1);</span><br><span class="line">		&#125;</span><br><span class="line">		xSemaphoreGiveRecursive(Semaphore_Handle_USART1);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="小标题"><a href="#小标题" class="headerlink" title="小标题"></a>小标题</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## 小标题</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="小小标题"><a href="#小小标题" class="headerlink" title="小小标题"></a>小小标题</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">### 小小标题</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>加粗实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**加粗实例**</span><br></pre></td></tr></table></figure>
+<hr>
+<p>超链接示意<br><a href="Johnlinlife.github.io" title="我的个人主页">个人主页</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">超链接示意</span><br><span class="line">[文本]( www.baidu.com &quot;百度&quot;)</span><br></pre></td></tr></table></figure>
 
+<p>可点击地址实例 <a href="mailto:&#49;&#x31;&#x38;&#x36;&#x37;&#48;&#x33;&#57;&#52;&#x37;&#64;&#x71;&#113;&#46;&#x63;&#111;&#x6d;">&#49;&#x31;&#x38;&#x36;&#x37;&#48;&#x33;&#57;&#52;&#x37;&#64;&#x71;&#113;&#46;&#x63;&#111;&#x6d;</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可点击地址实例 &lt;1186703947@qq.com&gt;</span><br></pre></td></tr></table></figure>
 
-
+<p>图片实例<br><img src="/photo/1.jpg" alt="这是图片" title="Magic Gardens"></p>
+<p>链接图片<br><a target="_blank" rel="noopener" href="https://markdown.com.cn/"><img src="/photo/1.jpg" alt="沙漠中的岩石图片" title="Shiprock"></a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>

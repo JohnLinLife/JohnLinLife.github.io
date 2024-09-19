@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>FreeRTOS笔记-信号量 | John Life</title>
+  <title>FreeRTOS笔记-定时器 | John Life</title>
   <meta name="keywords" content=" RTOS ">
-  <meta name="description" content="FreeRTOS笔记-信号量 | John Life">
+  <meta name="description" content="FreeRTOS笔记-定时器 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="test">
 <meta property="og:type" content="website">
@@ -392,9 +392,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-202491801" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-RTOS-Timer" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">FreeRTOS笔记-信号量</h1>
+        <h1 class="article-title">FreeRTOS笔记-定时器</h1>
     
     <div class="article-meta">
         
@@ -419,12 +419,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-19 15:39:09'>2024-06-18 23:32</time>
+            Created At : <time class="date" title='Updated At: 2024-09-19 16:06:00'>2024-09-19 15:56</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:436</span>
+        <span>Count:395</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -443,7 +443,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="toc-text">信号量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">信号量基本使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5"><span class="toc-text">使用信号量实现同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-text">使用信号量实现互斥锁</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-text">定时器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-text">创建定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tick%E4%B8%AD%E6%96%AD"><span class="toc-text">Tick中断</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -459,29 +459,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h1><h2 id="信号量基本使用方法"><a href="#信号量基本使用方法" class="headerlink" title="信号量基本使用方法"></a>信号量基本使用方法</h2><p>信号量句柄定义</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SemaphoreHandle_t Semaphore_Handle_1;</span><br></pre></td></tr></table></figure>
+        <h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><h3 id="创建定时器"><a href="#创建定时器" class="headerlink" title="创建定时器"></a>创建定时器</h3><p>使用动态分配内存的方法创建定时器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TimerHandle_t xTimerCreate( const char * const pcTimerName,             </span><br><span class="line">                            const TickType_t xTimerPeriodInTicks,</span><br><span class="line">                            const UBaseType_t uxAutoReload,</span><br><span class="line">                            void * const pvTimerID,</span><br><span class="line">                            TimerCallbackFunction_t pxCallbackFunction )</span><br></pre></td></tr></table></figure>
+<p>pcTimerName:定时器名字，用处不大，尽在调试时用到</p>
+<p>xTimerPeriodInTicks:周期，以Tick为单位</p>
+<p>uxAutoReload:类型，pdTRUE表示自动加载，pdFALSE表示一次性</p>
+<p>pvTimerID:回调函数可以使用此参数，比如分辨是哪个定时器</p>
+<p>pxCa11backFunction:回调函数</p>
+<p>返回值:成功则返回TimerHandle_t，否则返回NULL</p>
+<h3 id="Tick中断"><a href="#Tick中断" class="headerlink" title="Tick中断"></a>Tick中断</h3><p>FreeRTOS中存在一个Tick中断，软件定时器基于Tick来运行，在Tick中断里，它会判断定时器是否超时，超时了就进入回调函数。</p>
+<p><strong>守护任务</strong>：创建了一个prvTimerTask任务。开启后需要对这个任务进行配置（优先级、栈大小、队列）。</p>
+<p><strong>守护任务队列的作用</strong>：在执行定时器函数时，本质是操作数据发送到队列中，。</p>
+<blockquote>
+<p>在开启宏定义功能模块后，自定义了函数：<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">StackType_t xIdleTimerStack[100];</span><br><span class="line">StaticTask_t xTimerTask;</span><br><span class="line">void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer,</span><br><span class="line">                                     StackType_t ** ppxTimerTaskStackBuffer,</span><br><span class="line">                                     uint32_t * pulTimerTaskStackSize )</span><br><span class="line">&#123;</span><br><span class="line">	*ppxTimerTaskTCBBuffer = &amp;xTimerTask;</span><br><span class="line">	*ppxTimerTaskStackBuffer = xIdleTimerStack;</span><br><span class="line">	*pulTimerTaskStackSize = 100;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>编写定时器回调函数</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void Timer1CallbackFunction()</span><br><span class="line">&#123;</span><br><span class="line">	static int sum = 0;</span><br><span class="line">	printf(&quot;Timer has run : %d \r\n&quot;, sum++);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>信号量创建，前面句柄创建，第一个变量为信号量的最大容量，第二个为初始数值</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_1 = xSemaphoreCreateCounting(10, 0);	</span><br></pre></td></tr></table></figure>
-
-<p>信号量添加，添加完成后，信号量的数值加1</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreGive(Semaphore_Handle_1);</span><br></pre></td></tr></table></figure>
-
-<p>信号量读取，即信号量减少，使用portMAX_DELAY后，在读取到才继续运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreTake(Semaphore_Handle_1, portMAX_DELAY);</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="使用信号量实现同步"><a href="#使用信号量实现同步" class="headerlink" title="使用信号量实现同步"></a>使用信号量实现同步</h2><p>同步：即在信号量give后，就能进行take，实现任务的同步，例如在计算完成后才进行take后续的任务，两个任务就实现了同步。</p>
-<p>实验现象：当不通过信号量来进行输出时，并没有及时地对结果进行输出，说明任务没有进行同步，在任务调度中可能错过信息。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">void Task2Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	int sum;</span><br><span class="line">	while (1)</span><br><span class="line">	&#123;</span><br><span class="line">		flag = 0;</span><br><span class="line">		xSemaphoreTake(Semaphore_Handle_1, portMAX_DELAY)</span><br><span class="line">		printf(&quot;task2 is running\r\n&quot;);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Task3Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		if（flag = 1）</span><br><span class="line">			printf(&quot;task3 is running\r\n&quot;);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="使用信号量实现互斥锁"><a href="#使用信号量实现互斥锁" class="headerlink" title="使用信号量实现互斥锁"></a>使用信号量实现互斥锁</h2><p>互斥：两个任务不能同时进行，即对功能运行的完整性进行保证，避免冲突<br>创建二进制信号量，初始值为0</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_USART1 = xSemaphoreCreateBinary();</span><br></pre></td></tr></table></figure>
-<p>给二进制信号量赋1，标志着该临界资源空闲可以使用，例为串口1的使用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreGive(Semaphore_Handle_USART1);</span><br></pre></td></tr></table></figure>
-
-<p>如下是互斥锁的使用，两个任务使用一个串口，而不会导致输出过程相互冲突。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void Task2Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	int sum;</span><br><span class="line">	while (1)</span><br><span class="line">	&#123;</span><br><span class="line">		xSemaphoreTake(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">		printf(&quot;task2 is running\r\n&quot;);</span><br><span class="line">		xSemaphoreGive(Semaphore_Handle_USART1);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Task3Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		xSemaphoreTake(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">		printf(&quot;task3 is running\r\n&quot;);</span><br><span class="line">		xSemaphoreGive(Semaphore_Handle_USART1);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定时器回调函数会以设定时间进行运行，可选择是否循环运行或者运行单次</p>
+<p><strong>定时器的运用</strong>：按键消抖<br>通过定时器的不循环模式，设定消抖时间，在按键中断抖动时，进入定时器，中断回调函数一直在reset定时器，就能实现按键抖动啦。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>

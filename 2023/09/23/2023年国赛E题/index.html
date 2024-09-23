@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hexo使用教程 | John Life</title>
+  <title>2023年国赛E题-目标追踪系统 | John Life</title>
   <meta name="keywords" content="">
-  <meta name="description" content="Hexo使用教程 | John Life">
+  <meta name="description" content="2023年国赛E题-目标追踪系统 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="photo">
@@ -424,9 +424,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Test" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-2023年国赛E题" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Hexo使用教程</h1>
+        <h1 class="article-title">2023年国赛E题-目标追踪系统</h1>
     
     <div class="article-meta">
         
@@ -436,7 +436,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="其他开发">其他开发</a>
+            <a  data-rel="STM32">STM32</a>
             
         </span>
         
@@ -444,12 +444,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-19 13:36:54'>2024-06-18 23:26</time>
+            Created At : <time class="date" title='Updated At: 2024-09-23 20:02:17'>2023-09-23 19:11</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:97</span>
+        <span>Count:1.4k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -468,7 +468,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAblog"><span class="toc-text">创建blog</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E5%8A%A8%E7%9B%AE%E6%A0%87%E6%8E%A7%E5%88%B6%E4%B8%8E%E8%87%AA%E5%8A%A8%E8%BF%BD%E8%B8%AA%E7%B3%BB%E7%BB%9F%EF%BC%88E%E9%A2%98%EF%BC%89"><span class="toc-text">运动目标控制与自动追踪系统（E题）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%91%E5%8F%B0%E7%BB%84%E6%88%90"><span class="toc-text">云台组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="toc-text">算法原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%89%A9%E5%9B%BE"><span class="toc-text">实物图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E7%9B%91%E6%B5%8B"><span class="toc-text">目标监测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-text">结果</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -484,19 +484,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="创建blog"><a href="#创建blog" class="headerlink" title="创建blog"></a>创建blog</h1><p>使用gitbash，指定地址到文件目录。使用指令进行创建</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<hr>
-<p>也可以创建一个页面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page <span class="string">&quot;page name&quot;</span></span><br></pre></td></tr></table></figure>
-<p>这个页面会生成一个pagename的目录，可以使用子地址进行访问</p>
-<hr>
-<p>生成编译文件,使用了缩写</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
-<hr>
-<p>预览项目,使用了缩写</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
-<hr>
+        <h1 id="运动目标控制与自动追踪系统（E题）"><a href="#运动目标控制与自动追踪系统（E题）" class="headerlink" title="运动目标控制与自动追踪系统（E题）"></a>运动目标控制与自动追踪系统（E题）</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文将探讨基于三维舵机云台的自动追踪系统的各个方面。主要介绍系统的构成和原理，包括云台结构、传感器选择与应用以及控制电路与算法概述。<br>本文为赛后复盘。</p>
+<h2 id="系统概述"><a href="#系统概述" class="headerlink" title="系统概述"></a>系统概述</h2><p>基于三维舵机云台的自动追踪系统是一种集成了摄像头、控制算法和机械结构的自动化系统，旨在实现对特定目标物体在三维空间内的自动追踪和定位。该系统通过实时采集传感器数据，使用单片机装载运动学算法计算目标的位置和角度，然后通过舵机控制实现云台的运动，使得装载了摄像头和激光笔的云台能够持续地朝向目标物体，将激光点持续地照射到目标上。<br>系统的核心构成包括三维舵机云台、传感器模块、单片机控制电路与算法。三维舵机云台负责承载传感器和实现运动，具有精确的角度控制能力。传感器模选择的是单目摄像头，用于获取目标的位置和角度等信息。控制电路与算法则负责处理传感器数据，通过运动学算法和控制策略，计算出云台的控制指令，实现自动追踪。</p>
+<h3 id="云台组成"><a href="#云台组成" class="headerlink" title="云台组成"></a>云台组成</h3><p>云台的设计要考虑机械结构的稳定性和运动的精确性。三维云台一般由两个舵机组成，其结构可视为两个关节组成的机器人。而机器人关节伺服系统的动态误差 ，是影响其末端执行器运动轨迹精度的一个重要因素。<a href="%E9%9F%A9%E7%BF%94%E5%AE%87,%E9%83%BD%E4%B8%9C,%E9%99%88%E5%BC%BA%E7%AD%89.%E5%9F%BA%E4%BA%8E%E8%BF%90%E5%8A%A8%E5%AD%A6%E5%88%86%E6%9E%90%E7%9A%84%E5%B7%A5%E4%B8%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BD%A8%E8%BF%B9%E7%B2%BE%E5%BA%A6%E6%B5%8B%E9%87%8F%E7%9A%84%E7%A0%94%E7%A9%B6%5BJ%5D.%E6%9C%BA%E5%99%A8%E4%BA%BA,2002(01):1-5.DOI:10.13973/j.cnki.robot.2002.01.001.">^1</a><br>通常，云台会由水平旋转和垂直旋转两个舵机组成，分别用于控制水平方向和垂直方向的运动。云台的运动是基于舵机的角度控制实现的，舵机的旋转会带动装载在其上的传感器进行相应方向的扫描。</p>
+<h3 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h3><p>在正向运动学中，舵机云台有两个旋转关节，分别是偏航关节和俯仰关节。这两个关节的角度分别是α和β。舵机云台的末端执行器在三维空间中的位置可以用笛卡尔坐标表示为(x, y, z)，姿态可以用欧拉角或四元数表示。</p>
+<p>在激光映射的平面上，构建一个XY轴的平面坐标系，激光点在纸板上的坐标 需要先转换为激光点在全局坐标系下的坐标G 。</p>
+<p>X与云台的偏航角有关，Y与云台的俯仰角有关。所以在处理正逆向运动学问题的时候，可以将其拆解为两个独立的过程。<br><img src="https://img.picui.cn/free/2024/09/23/66f1577211ef8.png" alt="1727092653077.png"></p>
+<p>逆向运动学刚好相反，需要制定激光点的坐标，求解此时云台的偏航角α与俯仰角β。</p>
+<blockquote>
+<p>markdown文件编写，计算公式写起来好麻烦，算法就不写了</p>
+</blockquote>
+<h3 id="实物图"><a href="#实物图" class="headerlink" title="实物图"></a>实物图</h3><p><img src="https://img.picui.cn/free/2024/09/23/66f1577211f32.png" alt="实物"></p>
+<h3 id="目标监测"><a href="#目标监测" class="headerlink" title="目标监测"></a>目标监测</h3><p>目标监测是队友写的，不过我也略懂一点opencv。</p>
+<p>在该系统中，使用了树莓派作为视觉识别的计算工具。现在看来树莓派的缺点还是很致命的，它的环境配置比较困难，两天三夜的比赛还是需要提前配置好。</p>
+<p>树莓派作为可搭载Linux系统的嵌入式设备，能有效快速地处理传输过来的图像。将摄像头设备连接到树莓派，在树莓派系统中调用开源的OpenCv图像处理程序，对传输过来的视频按特定帧率进行分析。</p>
+<p>在视觉识别中，第一步是图像的预处理；包括灰度转换，二值化，骨架化。。。</p>
+<p>骨架化完成后，图像线条非常的明显，就可以使用cv的findcontours（）进行轮廓监测啦。</p>
+<p>对于满足一定条件的轮廓，使用cv2.approxPolyDP()函数进行多边形拟合，得到长方形的端点坐标。</p>
+<p>将检测到的端点坐标排序，以得到起点。完成操作后，即可得到对应端点坐标。<br><img src="https://img.picui.cn/free/2024/09/23/66f15772474ce.png" alt="平面模型"></p>
+<p>在图像处理后，得到的数据便可以通过串口通信的方式发送到STM32上，由STM32控制云台进行运动，实现巡黑线运动的功能。<br>通过该坐标，即可得到当前目标点的大致位置。将该坐标与原图分辨率进行除法运算，即可得到其在空间中相对的位置。<br>在STM32端，需要将得到的数据和设定的参数相乘，使其精准的将云台指向目标点位。</p>
+<h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p>作品测试场景搭建如图所示，其中三维舵机云台与目标摆放平面平行，距离以摄像头镜头为起点，到目标平面为1米。<br><img src="https://img.picui.cn/free/2024/09/23/66f1577237438.png" alt="实验环境"></p>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>拿了个省级二等奖，主要是留了一手备用按钮，在出现故障时，采用planB。</p>
+<p>做人也一样，总要给自己留下一个planB或planC，我们的planA走不通的时候，planB的含金量就上来了，就好像你刚喝了酒请代驾，刚好遇上了查酒驾一样。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>

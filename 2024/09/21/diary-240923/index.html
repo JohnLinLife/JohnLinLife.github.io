@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>FreeRTOS笔记-信号量 | John Life</title>
-  <meta name="keywords" content=" RTOS ">
-  <meta name="description" content="FreeRTOS笔记-信号量 | John Life">
+  <title>广州艺术博物馆游记-240921 | John Life</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="广州艺术博物馆游记-240921 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="photo">
@@ -415,9 +415,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-202491801" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-diary-240923" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">FreeRTOS笔记-信号量</h1>
+        <h1 class="article-title">广州艺术博物馆游记-240921</h1>
     
     <div class="article-meta">
         
@@ -427,27 +427,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="STM32">STM32</a>
+            <a  data-rel="奇思">奇思</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color5">RTOS</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-09-23 19:07:20'>2024-09-21 18:05</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-19 15:39:09'>2024-06-18 23:32</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:436</span>
+        <span>Count:400</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -466,7 +459,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="toc-text">信号量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">信号量基本使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5"><span class="toc-text">使用信号量实现同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-text">使用信号量实现互斥锁</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B9%BF%E5%B7%9E%E8%89%BA%E6%9C%AF%E5%8D%9A%E7%89%A9%E9%A6%86%E6%B8%B8%E8%AE%B0"><span class="toc-text">广州艺术博物馆游记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#24-9-21"><span class="toc-text">24.9.21</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -482,29 +475,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h1><h2 id="信号量基本使用方法"><a href="#信号量基本使用方法" class="headerlink" title="信号量基本使用方法"></a>信号量基本使用方法</h2><p>信号量句柄定义</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SemaphoreHandle_t Semaphore_Handle_1;</span><br></pre></td></tr></table></figure>
-
-<p>信号量创建，前面句柄创建，第一个变量为信号量的最大容量，第二个为初始数值</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_1 = xSemaphoreCreateCounting(10, 0);	</span><br></pre></td></tr></table></figure>
-
-<p>信号量添加，添加完成后，信号量的数值加1</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreGive(Semaphore_Handle_1);</span><br></pre></td></tr></table></figure>
-
-<p>信号量读取，即信号量减少，使用portMAX_DELAY后，在读取到才继续运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreTake(Semaphore_Handle_1, portMAX_DELAY);</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="使用信号量实现同步"><a href="#使用信号量实现同步" class="headerlink" title="使用信号量实现同步"></a>使用信号量实现同步</h2><p>同步：即在信号量give后，就能进行take，实现任务的同步，例如在计算完成后才进行take后续的任务，两个任务就实现了同步。</p>
-<p>实验现象：当不通过信号量来进行输出时，并没有及时地对结果进行输出，说明任务没有进行同步，在任务调度中可能错过信息。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">void Task2Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	int sum;</span><br><span class="line">	while (1)</span><br><span class="line">	&#123;</span><br><span class="line">		flag = 0;</span><br><span class="line">		xSemaphoreTake(Semaphore_Handle_1, portMAX_DELAY)</span><br><span class="line">		printf(&quot;task2 is running\r\n&quot;);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Task3Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		if（flag = 1）</span><br><span class="line">			printf(&quot;task3 is running\r\n&quot;);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="使用信号量实现互斥锁"><a href="#使用信号量实现互斥锁" class="headerlink" title="使用信号量实现互斥锁"></a>使用信号量实现互斥锁</h2><p>互斥：两个任务不能同时进行，即对功能运行的完整性进行保证，避免冲突<br>创建二进制信号量，初始值为0</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Semaphore_Handle_USART1 = xSemaphoreCreateBinary();</span><br></pre></td></tr></table></figure>
-<p>给二进制信号量赋1，标志着该临界资源空闲可以使用，例为串口1的使用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xSemaphoreGive(Semaphore_Handle_USART1);</span><br></pre></td></tr></table></figure>
-
-<p>如下是互斥锁的使用，两个任务使用一个串口，而不会导致输出过程相互冲突。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void Task2Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	int sum;</span><br><span class="line">	while (1)</span><br><span class="line">	&#123;</span><br><span class="line">		xSemaphoreTake(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">		printf(&quot;task2 is running\r\n&quot;);</span><br><span class="line">		xSemaphoreGive(Semaphore_Handle_USART1);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Task3Function(void * param)</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		xSemaphoreTake(Semaphore_Handle_USART1, portMAX_DELAY);</span><br><span class="line">		printf(&quot;task3 is running\r\n&quot;);</span><br><span class="line">		xSemaphoreGive(Semaphore_Handle_USART1);</span><br><span class="line">		vTaskDelay(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="广州艺术博物馆游记"><a href="#广州艺术博物馆游记" class="headerlink" title="广州艺术博物馆游记"></a>广州艺术博物馆游记</h1><h2 id="24-9-21"><a href="#24-9-21" class="headerlink" title="24.9.21"></a>24.9.21</h2><p>21日星期六，天气渐凉，带来冷空气的风夹带细雨，也不影响街道上熙熙攘攘。<br>广州艺术博物馆，坐落在广州海珠区，抬头就能看见广州塔。带着鉴赏艺术的心情和目的，我们进入了博物馆。</p>
+<p>一进大堂，便见一架钢琴陈列，座上一个女子在弹奏钢琴。建筑内部采用了中空的设计，处在建筑中心的钢琴琴声悠扬，<br>不管在几楼的露台上都可以听到表演。</p>
+<p>馆内藏品较少，基本上为书法和一些收藏家的捐献。</p>
+<p>我的学校里有一个中山先生的雕塑，雕塑底座上便写了“天下为公”四个字，今日在馆内书法藏品中，<br>看到了这一书法作品。<br><img src="https://img.picui.cn/free/2024/09/23/66f14141a1511.jpg" alt="书法" title="天下为公-孙文"><br>所谓大道之行也，天下为公。这也是我们最远大而美好的社会愿景。</p>
+<p>在捐献的收藏品中，这个珍珠瓶也是非常好看的。瓶子上有一粒一粒的小疙瘩，也不知道是怎么制作的。<br>上面绘制了传统的花草，赏心悦目。<br><img src="https://img.picui.cn/free/2024/09/23/66f14141d5108.jpg" alt="古物" title="花瓶"></p>
+<p>在收藏品中，有释迦摩尼的金像。释迦摩尼是佛教的创始人，该佛像高大约40cm，形象为释迦摩尼坐像，前面放置一个金刚杵（应该是吧）。</p>
+<p><img src="https://img.picui.cn/free/2024/09/23/66f14141f28de.jpg" alt="收藏品" title="释迦摩尼"></p>
+<p>对书法作品的鉴赏，我的能力还是不足的。虽然我以前学过一些，现在已然全部忘记，甚至我现在写字还很丑。<br><img src="https://img.picui.cn/free/2024/09/23/66f1414221886.jpg" alt="书法" title="书法"></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>

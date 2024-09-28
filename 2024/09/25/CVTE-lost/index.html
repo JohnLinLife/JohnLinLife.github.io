@@ -143,7 +143,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(13)</small>
+                <small>(14)</small>
             
         </div>
     </li>
@@ -155,7 +155,7 @@
         <div data-rel="STM32">
             
             STM32
-            <small>(7)</small>
+            <small>(8)</small>
         </div>
         
     </li>
@@ -237,8 +237,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="13">
-<input type="hidden" id="yelog_site_word_count" value="5.9k">
+<input type="hidden" id="yelog_site_posts_number" value="14">
+<input type="hidden" id="yelog_site_word_count" value="6.8k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -307,6 +307,15 @@
            data-author="" >
             <span class="post-title" title="Hexo使用教程">Hexo使用教程</span>
             <span class="post-date" title="2024-06-18 23:26:56">2024/06/18</span>
+        </a>
+        
+        
+        <a  class="All STM32 "
+           href="/2024/09/28/RTOS-to-RCT6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="RTOS的移植的坑-STM32F103RTC6">RTOS的移植的坑-STM32F103RTC6</span>
+            <span class="post-date" title="2024-09-28 17:28:55">2024/09/28</span>
         </a>
         
         
@@ -447,12 +456,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-25 21:44:54'>2024-09-25 15:37</time>
+            Created At : <time class="date" title='Updated At: 2024-09-28 12:47:31'>2024-09-25 15:37</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:810</span>
+        <span>Count:816</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -497,13 +506,11 @@
 </li>
 <li><p>RTOS除了时间轮换还有没有别的调度方式</p>
 <blockquote>
-<p>这个我不太清楚，我说在FreeRTOSconfig.h文件里可以对轮转进行修改</p>
+<p>这个记不太清楚，我说在FreeRTOSconfig.h文件里可以对轮转进行修改</p>
 </blockquote>
 </li>
 </ol>
-<blockquote>
 <p>通过资料收集：FreeRTOS支持的任务调度方法有抢占式、协作式、时间片轮转</p>
-</blockquote>
 <ol start="3">
 <li><p>讲一下中断优先级和任务调度的区别（不记得是不是这个了，当时没听懂）</p>
 <blockquote>
@@ -559,6 +566,8 @@
 <blockquote>
 <p>八股文，防止编译器优化。用在经常要读写的地方，如中断和主函数通用的变量；还用在了寄存器的指向上。</p>
 </blockquote>
+</li>
+<li><p>ADC采样的过程</p>
 </li>
 </ol>
 

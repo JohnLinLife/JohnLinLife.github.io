@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>FreeRTOS笔记-定时器 | John Life</title>
-  <meta name="keywords" content=" RTOS ">
-  <meta name="description" content="FreeRTOS笔记-定时器 | John Life">
+  <title>lvgl开发-1.我的第一个lvgl程序 | John Life</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="lvgl开发-1.我的第一个lvgl程序 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="test">
 <meta property="og:type" content="website">
@@ -457,9 +457,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-RTOS-Timer" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-LVGL-1-1-MyFistLvglProject" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">FreeRTOS笔记-定时器</h1>
+        <h1 class="article-title">lvgl开发-1.我的第一个lvgl程序</h1>
     
     <div class="article-meta">
         
@@ -474,22 +474,15 @@
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color5">RTOS</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-09-28 22:02:08'>2024-09-28 18:18</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-25 21:46:12'>2024-09-19 15:56</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:395</span>
+        <span>Count:700</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -508,7 +501,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-text">定时器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-text">创建定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tick%E4%B8%AD%E6%96%AD"><span class="toc-text">Tick中断</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LVGL%E5%BC%80%E5%8F%91-1-%E7%A7%BB%E6%A4%8DLVGL"><span class="toc-text">LVGL开发-1.移植LVGL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E6%A4%8D%E8%BF%87%E7%A8%8B"><span class="toc-text">移植过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E6%A4%8D%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6"><span class="toc-text">移植第一步：下载文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%8F%90%E5%8F%96"><span class="toc-text">文件的提取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-text">代码编译的设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%98%BE%E7%A4%BA%E7%9A%84%E5%BF%85%E8%A6%81%E6%96%87%E4%BB%B6"><span class="toc-text">修改显示的必要文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug%E9%83%A8%E5%88%86"><span class="toc-text">debug部分</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -524,24 +517,49 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><h3 id="创建定时器"><a href="#创建定时器" class="headerlink" title="创建定时器"></a>创建定时器</h3><p>使用动态分配内存的方法创建定时器</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TimerHandle_t xTimerCreate( const char * const pcTimerName,             </span><br><span class="line">                            const TickType_t xTimerPeriodInTicks,</span><br><span class="line">                            const UBaseType_t uxAutoReload,</span><br><span class="line">                            void * const pvTimerID,</span><br><span class="line">                            TimerCallbackFunction_t pxCallbackFunction )</span><br></pre></td></tr></table></figure>
-<p>pcTimerName:定时器名字，用处不大，尽在调试时用到</p>
-<p>xTimerPeriodInTicks:周期，以Tick为单位</p>
-<p>uxAutoReload:类型，pdTRUE表示自动加载，pdFALSE表示一次性</p>
-<p>pvTimerID:回调函数可以使用此参数，比如分辨是哪个定时器</p>
-<p>pxCa11backFunction:回调函数</p>
-<p>返回值:成功则返回TimerHandle_t，否则返回NULL</p>
-<h3 id="Tick中断"><a href="#Tick中断" class="headerlink" title="Tick中断"></a>Tick中断</h3><p>FreeRTOS中存在一个Tick中断，软件定时器基于Tick来运行，在Tick中断里，它会判断定时器是否超时，超时了就进入回调函数。</p>
-<p><strong>守护任务</strong>：创建了一个prvTimerTask任务。开启后需要对这个任务进行配置（优先级、栈大小、队列）。</p>
-<p><strong>守护任务队列的作用</strong>：在执行定时器函数时，本质是操作数据发送到队列中，。</p>
-<blockquote>
-<p>在开启宏定义功能模块后，自定义了函数：<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">StackType_t xIdleTimerStack[100];</span><br><span class="line">StaticTask_t xTimerTask;</span><br><span class="line">void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer,</span><br><span class="line">                                     StackType_t ** ppxTimerTaskStackBuffer,</span><br><span class="line">                                     uint32_t * pulTimerTaskStackSize )</span><br><span class="line">&#123;</span><br><span class="line">	*ppxTimerTaskTCBBuffer = &amp;xTimerTask;</span><br><span class="line">	*ppxTimerTaskStackBuffer = xIdleTimerStack;</span><br><span class="line">	*pulTimerTaskStackSize = 100;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>编写定时器回调函数</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void Timer1CallbackFunction()</span><br><span class="line">&#123;</span><br><span class="line">	static int sum = 0;</span><br><span class="line">	printf(&quot;Timer has run : %d \r\n&quot;, sum++);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="LVGL开发-1-移植LVGL"><a href="#LVGL开发-1-移植LVGL" class="headerlink" title="LVGL开发-1.移植LVGL"></a>LVGL开发-1.移植LVGL</h1><p>本次移植文件基于RTOS项目，采用芯片为STM32F103RCT6，可能会内存不足。</p>
+<h2 id="移植过程"><a href="#移植过程" class="headerlink" title="移植过程"></a>移植过程</h2><h3 id="移植第一步：下载文件"><a href="#移植第一步：下载文件" class="headerlink" title="移植第一步：下载文件"></a>移植第一步：下载文件</h3><p>在lvgl的github仓库里进行下载，<a target="_blank" rel="noopener" href="https://github.com/lvgl/lvgl/tree/release/v8.3">下载链接</a></p>
+<p>使用git指令对这些文件进行下载。</p>
+<h3 id="文件的提取"><a href="#文件的提取" class="headerlink" title="文件的提取"></a>文件的提取</h3><p>在STM32的项目文件夹中，我们创建一个文件夹专门用来存放lvgl的代码，新建LVGL文件夹。</p>
+<p>在下载的lvgl文件中，我们需要提取出我们需要使用的文件。<br><img src="https://i-blog.csdnimg.cn/blog_migrate/63f6a33798ec900cde032daf325ea4a5.png#pic_center" alt="文件"><br>将上图中的四个文件加入到lvgl文件夹中。</p>
+<h3 id="代码编译的设置"><a href="#代码编译的设置" class="headerlink" title="代码编译的设置"></a>代码编译的设置</h3><p>将lvgl&#x2F;lv_conf_template.h 作为 lv_conf.h 复制到 lvgl 文件夹旁边，<br>将其第一个的 #if 0 更改为 1 以使能文件的内容并修改设置 LV_COLOR_DEPTH 宏。</p>
+<p>lv_port_display_template.c代表我们的显示接口</p>
+<p>lv_port_fs_template.c代表文件系统接口</p>
+<p>lv_port_indev_template.c代表输入设备接口</p>
+<p>在项目界面的Manage Project Items中，导入文件。<br><img src="https://img.picui.cn/free/2024/09/28/66f7ea690aec8.png"></p>
+<p>添加lvgl源文件</p>
+<p>将lvgl&#x2F;src目录下的<strong>core draw font misc widgets</strong>文件夹下的所有文件全部添加进lvgl组</p>
+<p>添加了一大堆c文件以后，配置一下他们的库路径。<br><img src="https://img.picui.cn/free/2024/09/28/66f7ea690aec8.png"></p>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>修改lv_port_disp_template.h，把#if使能打开。并且#include”lvgl.h”</p>
+<p>修改lv_port_disp_template.c,将开头的#if使能。</p>
+<p>修改lv_conf.h，使能#if。并且根据显示设备更改color depth。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Color depth: 1 (I1), 8 (L8), 16 (RGB565), 24 (RGB888), 32 (XRGB8888) */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LV_COLOR_DEPTH 16</span></span><br></pre></td></tr></table></figure>
+<p>这里还新加入了对屏幕大小的宏定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MY_DISP_HOR_RES 160</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MY_DISP_VER_RES  128</span></span><br></pre></td></tr></table></figure>
 
-<p>定时器回调函数会以设定时间进行运行，可选择是否循环运行或者运行单次</p>
-<p><strong>定时器的运用</strong>：按键消抖<br>通过定时器的不循环模式，设定消抖时间，在按键中断抖动时，进入定时器，中断回调函数一直在reset定时器，就能实现按键抖动啦。</p>
+<h3 id="修改显示的必要文件"><a href="#修改显示的必要文件" class="headerlink" title="修改显示的必要文件"></a>修改显示的必要文件</h3><p>在lv_port_disp_template.c中包含着显示的重要文件，这里我们只需要修改两处：</p>
+<p>注释掉Example2和3的部分：<br><img src="https://img.picui.cn/free/2024/09/28/66f7f57e57882.png"></p>
+<h2 id="debug部分"><a href="#debug部分" class="headerlink" title="debug部分"></a>debug部分</h2><p>照着步骤来，发现有较多的报错。可能是与博主版本不一致导致的。</p>
+<p>现在尝试进行一步步的修复。</p>
+<blockquote>
+<p>…\LVGL\src\widgets\win..&#x2F;..&#x2F;..&#x2F;lvgl.h(16): error:  #5: cannot open source input file “lv_version.h”: No such file or directory</p>
+</blockquote>
+<p>报错1：没有该头文件，发现在源文件中有这个头文件，加到我们的项目中。</p>
+<blockquote>
+<p>E:\keil32project\LVGL移植\freertos_project\LVGL\src\stdlib\lv_mem.h(97) : void lv_free(void * data);</p>
+</blockquote>
+<p>该报错来源于lv_port_indev_template.c或h文件，没有#if使能。</p>
+<blockquote>
+<p>..\OBJ\LCD.axf: Error: L6218E: Undefined symbol lv_mutex_delete (referred from lv_draw_sw_mask.o).</p>
+</blockquote>
+<p>报错显示了互斥锁的初始化啥的，应该是用到系统了。找了一路找到一个lv_os.h，应该是配置系统的。</p>
+<p>我的项目用了RTOS，所以在lv_conf.h里配置OS系统。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*=================</span></span><br><span class="line"><span class="comment"> * OPERATING SYSTEM</span></span><br><span class="line"><span class="comment"> *=================*/</span></span><br><span class="line"><span class="comment">/** Select operating system to use. Possible options:</span></span><br><span class="line"><span class="comment"> * - LV_OS_NONE</span></span><br><span class="line"><span class="comment"> * - LV_OS_PTHREAD</span></span><br><span class="line"><span class="comment"> * - LV_OS_FREERTOS</span></span><br><span class="line"><span class="comment"> * - LV_OS_CMSIS_RTOS2</span></span><br><span class="line"><span class="comment"> * - LV_OS_RTTHREAD</span></span><br><span class="line"><span class="comment"> * - LV_OS_WINDOWS</span></span><br><span class="line"><span class="comment"> * - LV_OS_MQX</span></span><br><span class="line"><span class="comment"> * - LV_OS_CUSTOM */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LV_USE_OS   LV_OS_FREERTOS</span></span><br></pre></td></tr></table></figure>
+<p>配置完以后，果然报错少了好多。还需要加上几个os相关的文件进去，如lv_os.c,lv_freeertos.c等。</p>
+<hr>
+<blockquote>
+<p>本文移植参考<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_59953808/article/details/126445608">https://blog.csdn.net/qq_59953808/article/details/126445608</a></p>
+</blockquote>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>

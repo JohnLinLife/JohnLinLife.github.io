@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>RTOS的移植的坑-STM32F103RTC6 | John Life</title>
+  <title>RTOS的移植的坑-STM32F103RCT6 | John Life</title>
   <meta name="keywords" content="">
-  <meta name="description" content="RTOS的移植的坑-STM32F103RTC6 | John Life">
+  <meta name="description" content="RTOS的移植的坑-STM32F103RCT6 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="photo">
@@ -238,7 +238,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="16">
-<input type="hidden" id="yelog_site_word_count" value="8.4k">
+<input type="hidden" id="yelog_site_word_count" value="8.5k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -332,7 +332,7 @@
            href="/2024/09/28/RTOS-to-RCT6/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="RTOS的移植的坑-STM32F103RTC6">RTOS的移植的坑-STM32F103RTC6</span>
+            <span class="post-title" title="RTOS的移植的坑-STM32F103RCT6">RTOS的移植的坑-STM32F103RCT6</span>
             <span class="post-date" title="2024-09-28 17:28:55">2024/09/28</span>
         </a>
         
@@ -464,7 +464,7 @@
     <div class="pjax">
         <article id="post-RTOS-to-RCT6" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">RTOS的移植的坑-STM32F103RTC6</h1>
+        <h1 class="article-title">RTOS的移植的坑-STM32F103RCT6</h1>
     
     <div class="article-meta">
         
@@ -482,7 +482,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-28 18:15:36'>2024-09-28 17:28</time>
+            Created At : <time class="date" title='Updated At: 2024-10-08 20:51:11'>2024-09-28 17:28</time>
         
     </div>
     <div class="article-meta">
@@ -506,7 +506,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BARTOS%E7%9A%84%E7%A7%BB%E6%A4%8D%E7%9A%84%E5%9D%91-STM32F103RTC6%E7%AF%87"><span class="toc-text">个人RTOS的移植的坑-STM32F103RTC6篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E6%A4%8D%E4%B9%8B%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87"><span class="toc-text">移植之前的准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A7%BB%E6%A4%8DRTOS%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-text">第一步：移植RTOS所需要的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%9C%A8keil5%E4%B8%AD%E5%B0%86%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%E9%A1%B9%E7%9B%AE%E4%B8%AD"><span class="toc-text">第二步: 在keil5中将这些文件添加到项目中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%AF%B9%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E8%BF%9B%E8%A1%8C%E4%BF%AE%E5%A4%8D"><span class="toc-text">第三步：对报错信息进行修复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA%E4%BB%BB%E5%8A%A1%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-text">第四步：创建任务进行测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A-DEBUG"><span class="toc-text">第五步： DEBUG</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BARTOS%E7%9A%84%E7%A7%BB%E6%A4%8D%E7%9A%84%E5%9D%91-STM32F103RCT6%E7%AF%87"><span class="toc-text">个人RTOS的移植的坑-STM32F103RCT6篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E6%A4%8D%E4%B9%8B%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87"><span class="toc-text">移植之前的准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A7%BB%E6%A4%8DRTOS%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-text">第一步：移植RTOS所需要的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%9C%A8keil5%E4%B8%AD%E5%B0%86%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%E9%A1%B9%E7%9B%AE%E4%B8%AD"><span class="toc-text">第二步: 在keil5中将这些文件添加到项目中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%AF%B9%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E8%BF%9B%E8%A1%8C%E4%BF%AE%E5%A4%8D"><span class="toc-text">第三步：对报错信息进行修复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA%E4%BB%BB%E5%8A%A1%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-text">第四步：创建任务进行测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A-DEBUG"><span class="toc-text">第五步： DEBUG</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -522,7 +522,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="个人RTOS的移植的坑-STM32F103RTC6篇"><a href="#个人RTOS的移植的坑-STM32F103RTC6篇" class="headerlink" title="个人RTOS的移植的坑-STM32F103RTC6篇"></a>个人RTOS的移植的坑-STM32F103RTC6篇</h1><p>本篇中简单描述RTOS移植的过程，重点在于记录移植过程中出现的调度失败问题。</p>
+        <h1 id="个人RTOS的移植的坑-STM32F103RCT6篇"><a href="#个人RTOS的移植的坑-STM32F103RCT6篇" class="headerlink" title="个人RTOS的移植的坑-STM32F103RCT6篇"></a>个人RTOS的移植的坑-STM32F103RCT6篇</h1><p>本篇中简单描述RTOS移植的过程，重点在于记录移植过程中出现的调度失败问题。</p>
 <h3 id="移植之前的准备"><a href="#移植之前的准备" class="headerlink" title="移植之前的准备"></a>移植之前的准备</h3><p>在移植之前，我准备了基于STM32F103RCT6的标准库项目以及在FreeRTOS官网上下载的项目包。</p>
 <p>标准库项目为RCT6的1.44寸LCD的例程项目。</p>
 <p>之前跟着韦东山老师进行项目的移植，他的方法为对demo项目进行直接裁剪。这种方法比较简单，但是对我们理解RTOS运行所需文件可能比较困难。<br>于是决定在现有项目上直接移植RTOS所需的文件。</p>

@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>photo | John Life</title>
+  <title>RTOS笔记-资源管理 | John Life</title>
   <meta name="keywords" content="">
-  <meta name="description" content="photo | John Life">
+  <meta name="description" content="RTOS笔记-资源管理 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="photo">
@@ -462,24 +462,32 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-rtos-Resourece-Management" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">photo</h1>
+        <h1 class="article-title">RTOS笔记-资源管理</h1>
     
     <div class="article-meta">
         
         
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="STM32">STM32</a>
+            
+        </span>
         
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-19 13:55:22'>2024-09-18 23:04</time>
+            Created At : <time class="date" title='Updated At: 2024-10-08 15:44:19'>2024-10-08 14:55</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1</span>
+        <span>Count:745</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -498,7 +506,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RTOS%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86-Resource-Management"><span class="toc-text">RTOS资源管理(Resource Management)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%B4%E7%95%8C%E8%B5%84%E6%BA%90%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">临界资源的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9A%82%E5%81%9C%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="toc-text">暂停调度器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E4%BB%BB%E5%8A%A1%E4%B8%AD%E5%B1%8F%E8%94%BD%E4%B8%AD%E6%96%AD"><span class="toc-text">在任务中屏蔽中断</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8ISR%E4%B8%AD%E5%B1%8F%E8%94%BD%E4%B8%AD%E6%96%AD"><span class="toc-text">在ISR中屏蔽中断</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -514,7 +522,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>test<br><a target="_blank" rel="noopener" href="https://markdown.com.cn/"><img src="/photo/1.jpg" alt="test" title="Shiprock"></a></p>
+        <h1 id="RTOS资源管理-Resource-Management"><a href="#RTOS资源管理-Resource-Management" class="headerlink" title="RTOS资源管理(Resource Management)"></a>RTOS资源管理(Resource Management)</h1><h2 id="临界资源的定义"><a href="#临界资源的定义" class="headerlink" title="临界资源的定义"></a>临界资源的定义</h2><p>在RTOS中，临界资源代表的是一次只能由一个任务来占用的资源。在前面的学习中，<br>我们采用了互斥锁来使临界资源仅由单个任务来使用。</p>
+<p>要独占式地访问临界资源，有2种方法：</p>
+<ul>
+<li>公平竞争：比如使用互斥量，谁先获得互斥量谁就访问临界资源，这部分内容前面讲过。</li>
+<li>谁要跟我抢，我就灭掉谁：<blockquote>
+<p>中断要跟我抢？我屏蔽中断</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>其他任务要跟我抢？我禁止调度器，不运行任务切换</p>
+</blockquote>
+<h2 id="暂停调度器"><a href="#暂停调度器" class="headerlink" title="暂停调度器"></a>暂停调度器</h2><p>暂停调度以后，任务之间不再进行调度。但是中断任然会触发。</p>
+<p>暂停和恢复调度的API函数如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*暂停调度器*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">vTaskSuspendAll</span><span class="params">( <span class="type">void</span> )</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*恢复调度器*/</span></span><br><span class="line">BaseType_t <span class="title function_">xTaskResumeAll</span><span class="params">( <span class="type">void</span> )</span>;</span><br></pre></td></tr></table></figure>
+<p>其内部原理是将一个全局变量进行++，然后调度会判断这个变量是不是0，0的话才能进行调度。</p>
+<h2 id="在任务中屏蔽中断"><a href="#在任务中屏蔽中断" class="headerlink" title="在任务中屏蔽中断"></a>在任务中屏蔽中断</h2><p>中断的屏蔽是屏蔽部分优先级比较低的中断，毕竟有一些中断是底层的不能去动他。</p>
+<p>中断的优先级中，最高的是复位中断、NMI中断和硬件错误中断三个。这三个是不可以屏蔽的中断。<br>它们的优先级分别是-3、-2和-1。</p>
+<p>在任务中屏蔽中断，示例代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 在任务中，当前时刻中断是使能的</span></span><br><span class="line"><span class="comment">* 执行这句代码后，屏蔽中断</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">taskENTER_CRITICAL();</span><br><span class="line"><span class="comment">/* 访问临界资源 */</span></span><br><span class="line"><span class="comment">/* 重新使能中断 */</span></span><br><span class="line">taskEXIT_CRITICAL();</span><br></pre></td></tr></table></figure>
+
+<p>在32位的单片机的可编程中断中，由8bit的寄存器来存储这些中断。</p>
+<p>其中从191(0xBE)到255（0xFF)是不调用syscall来进行的中断。优先级比较低，会被函数屏蔽。</p>
+<h3 id="在ISR中屏蔽中断"><a href="#在ISR中屏蔽中断" class="headerlink" title="在ISR中屏蔽中断"></a>在ISR中屏蔽中断</h3><p>在ISR中屏蔽中断，需要考量的是ISR恢复现场的功能。</p>
+<p>在ISR中屏蔽中断，中断的状态不一定就是开启的，使用ISR后缀的屏蔽，可以通过句柄恢复中断的状态，而不是屏蔽完再使能。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">vAnInterruptServiceRoutine</span><span class="params">( <span class="type">void</span> )</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* 用来记录当前中断是否使能 */</span></span><br><span class="line">	UBaseType_t uxSavedInterruptStatus;</span><br><span class="line">	<span class="comment">/* 在ISR中，当前时刻中断可能是使能的，也可能是禁止的</span></span><br><span class="line"><span class="comment">	 * 所以要记录当前状态, 后面要恢复为原先的状态</span></span><br><span class="line"><span class="comment">	 * 执行这句代码后，屏蔽中断</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	uxSavedInterruptStatus = taskENTER_CRITICAL_FROM_ISR();</span><br><span class="line">	<span class="comment">/* 访问临界资源 */</span></span><br><span class="line">	<span class="comment">/* 恢复中断状态 */</span></span><br><span class="line">	taskEXIT_CRITICAL_FROM_ISR( uxSavedInterruptStatus );</span><br><span class="line">	<span class="comment">/* 现在，当前ISR可以被更高优先级的中断打断了 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在taskENTER_CRITICA_FROM_ISR()和taskEXIT_CRITICAL_FROM_ISR() 之间：</p>
+<ul>
+<li>低优先级的中断被屏蔽了：优先级低于、等于configMAX_SYSCALL_INTERRUPT_PRIORITY</li>
+<li>高优先级的中断可以产生：优先级高于configMAX_SYSCALL_INTERRUPT_PRIORITY</li>
+<li>但是，这些中断ISR里，不允许使用FreeRTOS的API函数</li>
+<li>任务调度依赖于中断、依赖于API函数，所以：这两段代码之间，不会有任务调度产生</li>
+</ul>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>

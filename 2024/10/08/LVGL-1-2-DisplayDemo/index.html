@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>RTOS的移植的坑-STM32F103RCT6 | John Life</title>
+  <title>lvgl开发-2.显示设备的移植 | John Life</title>
   <meta name="keywords" content="">
-  <meta name="description" content="RTOS的移植的坑-STM32F103RCT6 | John Life">
+  <meta name="description" content="lvgl开发-2.显示设备的移植 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="test">
 <meta property="og:type" content="website">
@@ -475,32 +475,24 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-RTOS-to-RCT6" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-LVGL-1-2-DisplayDemo" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">RTOS的移植的坑-STM32F103RCT6</h1>
+        <h1 class="article-title">lvgl开发-2.显示设备的移植</h1>
     
     <div class="article-meta">
         
         
-        
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="STM32">STM32</a>
-            
-        </span>
         
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-10-08 20:51:11'>2024-09-28 17:28</time>
+            Created At : <time class="date" title='Updated At: 2024-10-11 13:49:50'>2024-10-08 21:15</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.1k</span>
+        <span>Count:448</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -519,7 +511,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BARTOS%E7%9A%84%E7%A7%BB%E6%A4%8D%E7%9A%84%E5%9D%91-STM32F103RCT6%E7%AF%87"><span class="toc-text">个人RTOS的移植的坑-STM32F103RCT6篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E6%A4%8D%E4%B9%8B%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87"><span class="toc-text">移植之前的准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A7%BB%E6%A4%8DRTOS%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-text">第一步：移植RTOS所需要的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%9C%A8keil5%E4%B8%AD%E5%B0%86%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%E9%A1%B9%E7%9B%AE%E4%B8%AD"><span class="toc-text">第二步: 在keil5中将这些文件添加到项目中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%AF%B9%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E8%BF%9B%E8%A1%8C%E4%BF%AE%E5%A4%8D"><span class="toc-text">第三步：对报错信息进行修复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA%E4%BB%BB%E5%8A%A1%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-text">第四步：创建任务进行测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A-DEBUG"><span class="toc-text">第五步： DEBUG</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#lvgl%E5%BC%80%E5%8F%91-2-%E6%98%BE%E7%A4%BA%E8%AE%BE%E5%A4%87%E7%9A%84%E7%A7%BB%E6%A4%8D"><span class="toc-text">lvgl开发-2.显示设备的移植</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%8E%A5%E5%88%9D%E5%A7%8B%E5%8C%96API"><span class="toc-text">对接初始化API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%88%B7%E6%96%B0API"><span class="toc-text">修改刷新API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E6%B5%8B%E8%AF%95"><span class="toc-text">显示测试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%EF%BC%8C%E5%9C%A8%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%87%BA%E7%8E%B0%E4%BA%86%E5%86%85%E5%AD%98%E4%B8%8D%E8%B6%B3%E7%9A%84%E6%8A%A5%E9%94%99%EF%BC%8C%E6%88%91%E4%BB%AC%E7%9A%84%E5%A4%A7%E5%B0%8F%E8%BF%98%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9%E3%80%82%E6%88%91%E4%BB%AC%E4%BF%AE%E6%94%B9lv-conf-h%E9%87%8C%E9%9D%A2%E7%9A%84%E5%8F%82%E6%95%B0%E3%80%82"><span class="toc-text">注意的是，在配置中出现了内存不足的报错，我们的大小还需要修改。我们修改lv_conf.h里面的参数。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%84%9F%E8%A7%89RCT6%E7%9A%84%E5%86%85%E5%AD%98%E6%83%B3%E5%90%8C%E6%97%B6%E8%B7%91RTOS%E5%92%8CLVGL%E6%9C%89%E7%82%B9%E5%9B%B0%E9%9A%BE%E3%80%82%E3%80%82%E3%80%82"><span class="toc-text">感觉RCT6的内存想同时跑RTOS和LVGL有点困难。。。</span></a></li></ol></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -535,51 +527,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="个人RTOS的移植的坑-STM32F103RCT6篇"><a href="#个人RTOS的移植的坑-STM32F103RCT6篇" class="headerlink" title="个人RTOS的移植的坑-STM32F103RCT6篇"></a>个人RTOS的移植的坑-STM32F103RCT6篇</h1><p>本篇中简单描述RTOS移植的过程，重点在于记录移植过程中出现的调度失败问题。</p>
-<h3 id="移植之前的准备"><a href="#移植之前的准备" class="headerlink" title="移植之前的准备"></a>移植之前的准备</h3><p>在移植之前，我准备了基于STM32F103RCT6的标准库项目以及在FreeRTOS官网上下载的项目包。</p>
-<p>标准库项目为RCT6的1.44寸LCD的例程项目。</p>
-<p>之前跟着韦东山老师进行项目的移植，他的方法为对demo项目进行直接裁剪。这种方法比较简单，但是对我们理解RTOS运行所需文件可能比较困难。<br>于是决定在现有项目上直接移植RTOS所需的文件。</p>
-<h3 id="第一步：移植RTOS所需要的文件"><a href="#第一步：移植RTOS所需要的文件" class="headerlink" title="第一步：移植RTOS所需要的文件"></a>第一步：移植RTOS所需要的文件</h3><p>在下载完解压后得到\FreeRTOSv202212.01文件。</p>
-<p>我们需要的文件如下：</p>
-<blockquote>
-<p>目录\FreeRTOS\Source\：</p>
-<blockquote>
-<p>croutine.c 、 event_groups.c 、 list.c、 queue.c、 stream_buffer.c、 tasks.c、 timers.c</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<p>目录\FreeRTOS\Source\include\：其中包含的头文件均可以移植</p>
-</blockquote>
-<blockquote>
-<p>目录\FreeRTOSv202212.01\FreeRTOS\Source\portable\：</p>
-<blockquote>
-<p>该目录下的MemMang文件(内存管理文件)以及RVDS文件（包含port配置)</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<p>FreeRTOSconfig.h文件，这个文件是对系统进行设置的文件</p>
-</blockquote>
-<p>移动到我们的标准库项目中，除了FreeRTOSconfig.h文件我们放在项目的USER目录下，其他的可以新建一个RTOS的文件夹。</p>
-<h3 id="第二步-在keil5中将这些文件添加到项目中"><a href="#第二步-在keil5中将这些文件添加到项目中" class="headerlink" title="第二步: 在keil5中将这些文件添加到项目中"></a>第二步: 在keil5中将这些文件添加到项目中</h3><p>首先是对工作空间的设置，将RTOS移植的c文件添加到我们的工作空间。</p>
-<p>接着点击魔法棒，在C&#x2F;C++栏目将RTOS的使用到的头文件所在目录都添加到目录列表中，我们的编译器在编译时回去这些文件夹中找到头文件。</p>
-<h3 id="第三步：对报错信息进行修复"><a href="#第三步：对报错信息进行修复" class="headerlink" title="第三步：对报错信息进行修复"></a>第三步：对报错信息进行修复</h3><p>报错信息基本上可以分为几类：</p>
-<p><strong>1. 未定义的函数使用</strong></p>
-<p>我们使用CTRL+F来检索该未定义的函数，部分函数在RTOS中是要由用户自己来编写的。<br>为了保证项目的简洁，在RTOS中，我们检索函数在定义时需要的宏定义，将宏定义关闭。（因为RTOS项目我之前进行过修改，全新的好像不需要）</p>
-<p><strong>2. 数据类型未定义</strong></p>
-<p>这类问题一般是库与库之间对变量类型的定义问题，如它使用到了u8，u16这种。修复也很简单，可以在头文件中进行定义，或者直接调用定义过的头文件。</p>
-<p><strong>systick延时</strong><br>还需要注意的一点就是，裸机中我们常常使用systick来作为延时函数，在rtos中我们不能随便对它进行修改。<br>所以我在移植的时候把delay.c的延时全部改成了软件delay先。</p>
-<h3 id="第四步：创建任务进行测试"><a href="#第四步：创建任务进行测试" class="headerlink" title="第四步：创建任务进行测试"></a>第四步：创建任务进行测试</h3><p>配置完成以后，就可以创建任务来进行调试了。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">TaskHandle_t xHandleTask1;</span><br><span class="line">TaskHandle_t xHandleTask2;</span><br><span class="line"></span><br><span class="line">void Task1(void* parm)</span><br><span class="line">&#123;</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		LED = ~LED;</span><br><span class="line">		vTaskDelay(100);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void Task2(void* parm)</span><br><span class="line">&#123;</span><br><span class="line">	u16 num = 0;</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		LCD_ShowIntNum(0,64,num++,1,BLACK,WHITE,16);</span><br><span class="line">		vTaskDelay(100);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	LED_Init();//LED初始化</span><br><span class="line">	LCD_Init();//LCD初始化</span><br><span class="line">	LED = ~LED;</span><br><span class="line">	LCD_Fill(0,0,LCD_W,LCD_H,RED);</span><br><span class="line">	LCD_ShowPicture(32,0,40,40,gImage_1);</span><br><span class="line">	xTaskCreate(Task1, &quot;Task1&quot;, 1024, NULL, 1, &amp;xHandleTask1);</span><br><span class="line">	xTaskCreate(Task2, &quot;Task2&quot;, 1024, NULL, 1, &amp;xHandleTask2);</span><br><span class="line">	vTaskStartScheduler();</span><br><span class="line">	while(1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="lvgl开发-2-显示设备的移植"><a href="#lvgl开发-2-显示设备的移植" class="headerlink" title="lvgl开发-2.显示设备的移植"></a>lvgl开发-2.显示设备的移植</h1><h3 id="对接初始化API"><a href="#对接初始化API" class="headerlink" title="对接初始化API"></a>对接初始化API</h3><p>我们需要把LCD的文件对接到LVGL的函数里面去。</p>
+<p>首先是lv_port_disp——template.c文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Initialize your display and the required peripherals.*/</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">disp_init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	LCD_Init();</span><br><span class="line">    <span class="comment">/*You code here*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这一部分是显示设备的初始化。我们把LCD的初始化包进去。</p>
+<p>屏幕大小部分我们在lv_conf.h文件配置过就不需要修改了。由于宏定义这一部分不会被编译。</p>
+<h3 id="修改刷新API"><a href="#修改刷新API" class="headerlink" title="修改刷新API"></a>修改刷新API</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Flush the content of the internal buffer the specific area on the display.</span></span><br><span class="line"><span class="comment"> *`px_map` contains the rendered image as raw pixel map and it should be copied to `area` on the display.</span></span><br><span class="line"><span class="comment"> *You can use DMA or any hardware acceleration to do this operation in the background but</span></span><br><span class="line"><span class="comment"> *&#x27;lv_display_flush_ready()&#x27; has to be called when it&#x27;s finished.*/</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">disp_flush</span><span class="params">(<span class="type">lv_display_t</span> * disp_drv, <span class="type">const</span> <span class="type">lv_area_t</span> * area, <span class="type">uint8_t</span> * px_map)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(disp_flush_enabled) &#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">/*my code start*/</span></span><br><span class="line">		LCD_Fill(area-&gt;x1, area-&gt;y1, area-&gt;x2, area-&gt;y2, (u16)* px_map);</span><br><span class="line">		<span class="comment">/*my code end*/</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*IMPORTANT!!!</span></span><br><span class="line"><span class="comment">     *Inform the graphics library that you are ready with the flushing*/</span></span><br><span class="line">    lv_display_flush_ready(disp_drv);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里将LCD清屏的函数对接进去了。</p>
+<h3 id="显示测试"><a href="#显示测试" class="headerlink" title="显示测试"></a>显示测试</h3><p>在lv_conf.h文件修改DEMO使用的宏定义。如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LV_USE_DEMO_KEYPAD_AND_ENCODER 1</span></span><br></pre></td></tr></table></figure>
+<p>之后再改回来。</p>
+<p>将startup文件的stacksize改大点。本来是400</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stack_Size      EQU     <span class="number">0x00000800</span></span><br></pre></td></tr></table></figure>
 
-<p>首先动态创建两个任务，接着开启调度器让任务调度。<br>发现任务并没有如期进行。</p>
-<h3 id="第五步：-DEBUG"><a href="#第五步：-DEBUG" class="headerlink" title="第五步： DEBUG"></a>第五步： DEBUG</h3><p>出现了问题首先要检查是不是漏配了哪一步。</p>
-<p>最后发现，可能是systick中断的问题。<br>在FreeRTOS中SysTick定时器尤为重要，因为它是给FreeRTOS系统提供时钟的。<br>在FreeRTOS中任务的切换即每个任务运行的时间是由SysTick定时器提供的。<br>调度不正常就需要去考量一下systick的问题了。</p>
-<p>在FreeRTOS中已经提供了SysTick配置的函数vPortSetupTimerInterrupt()，函数在port.c文件中。当调用了开启任务调度函数vTaskStartScheduler()后里面就会调用该函数完成SysTick的配置。</p>
-<p>我们也可以通过另一种方式。<br>在stm32f10x_it.c中，我们对systick中断进行重写。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">SysTick_Handler</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;	</span><br><span class="line">    <span class="meta">#<span class="keyword">if</span> (INCLUDE_xTaskGetSchedulerState  == 1 )</span></span><br><span class="line">      <span class="keyword">if</span> (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)</span><br><span class="line">      &#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span>  <span class="comment">/* INCLUDE_xTaskGetSchedulerState */</span>  </span></span><br><span class="line">        xPortSysTickHandler();</span><br><span class="line">    <span class="meta">#<span class="keyword">if</span> (INCLUDE_xTaskGetSchedulerState  == 1 )</span></span><br><span class="line">      &#125;</span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span>  <span class="comment">/* INCLUDE_xTaskGetSchedulerState */</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>完成后发现调度正常。</p>
-<p>接下来就可以美美的进行lvgl的移植咯。</p>
+<p>我们在RCT6的显示屏没有输入功能，所以我们换成别的DEMO。</p>
+<h4 id="注意的是，在配置中出现了内存不足的报错，我们的大小还需要修改。我们修改lv-conf-h里面的参数。"><a href="#注意的是，在配置中出现了内存不足的报错，我们的大小还需要修改。我们修改lv-conf-h里面的参数。" class="headerlink" title="注意的是，在配置中出现了内存不足的报错，我们的大小还需要修改。我们修改lv_conf.h里面的参数。"></a>注意的是，在配置中出现了内存不足的报错，我们的大小还需要修改。我们修改lv_conf.h里面的参数。</h4><p>找到如下代码进行修改。可以看到它需要大于2KB的内存申请，修改成大于他就行了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> LV_USE_STDLIB_MALLOC == LV_STDLIB_BUILTIN</span></span><br><span class="line">    <span class="comment">/** Size of memory available for `lv_malloc()` in bytes (&gt;= 2kB) */</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> LV_MEM_SIZE (16U * 1024U)          <span class="comment">/**&lt; [bytes] 原来是:64*1024u*/</span></span></span><br></pre></td></tr></table></figure>
 
+<p>改完后编译成功可以下载，下载后发现花屏。<br><img src="https://img.picui.cn/free/2024/10/11/6708bb584c7b2.jpg" alt="花屏.jpg"></p>
+<h4 id="感觉RCT6的内存想同时跑RTOS和LVGL有点困难。。。"><a href="#感觉RCT6的内存想同时跑RTOS和LVGL有点困难。。。" class="headerlink" title="感觉RCT6的内存想同时跑RTOS和LVGL有点困难。。。"></a>感觉RCT6的内存想同时跑RTOS和LVGL有点困难。。。</h4>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>
     </div>

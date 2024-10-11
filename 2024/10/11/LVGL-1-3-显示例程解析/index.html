@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>局域网多虚拟机邮箱服务器SMTP配置 | John Life</title>
-  <meta name="keywords" content=" Linux ">
-  <meta name="description" content="局域网多虚拟机邮箱服务器SMTP配置 | John Life">
+  <title>lvgl开发-2.显示例程解析 | John Life</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="lvgl开发-2.显示例程解析 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="test">
 <meta property="og:type" content="website">
@@ -484,9 +484,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-LinuxMailClass" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-LVGL-1-3-显示例程解析" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">局域网多虚拟机邮箱服务器SMTP配置</h1>
+        <h1 class="article-title">lvgl开发-2.显示例程解析</h1>
     
     <div class="article-meta">
         
@@ -496,27 +496,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Linux">Linux</a>
+            <a  data-rel="STM32">STM32</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color1">Linux</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-10-11 20:13:17'>2024-10-11 15:56</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-25 21:53:41'>2024-09-19 13:56</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:110</span>
+        <span>Count:1.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -535,7 +528,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91%E5%A4%9A%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%82%AE%E7%AE%B1%E6%9C%8D%E5%8A%A1%E5%99%A8SMTP%E9%85%8D%E7%BD%AE"><span class="toc-text">局域网多虚拟机邮箱服务器SMTP配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EUbuntu%E7%9A%84%E5%B1%80%E5%9F%9F%E7%BD%91%E5%A4%9A%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%82%AE%E7%AE%B1%E6%9C%8D%E5%8A%A1%E5%99%A8SMTP%E9%85%8D%E7%BD%AE%E3%80%82%E6%9C%AC%E5%9C%B0%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%92%E5%8F%91%E3%80%82LINUX%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="toc-text">基于Ubuntu的局域网多虚拟机邮箱服务器SMTP配置。本地虚拟机互发。LINUX服务器配置过程</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LVGL%E5%BC%80%E5%8F%91-2-%E6%98%BE%E7%A4%BA%E4%BE%8B%E7%A8%8B%E7%9A%84%E8%A7%A3%E6%9E%90"><span class="toc-text">LVGL开发-2.显示例程的解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E7%A8%8B%E4%BB%A3%E7%A0%81%E7%9A%84%E8%BF%90%E8%A1%8C"><span class="toc-text">例程代码的运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%86%85%E5%AE%B9"><span class="toc-text">函数内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lv-obj-t"><span class="toc-text">lv_obj_t</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E4%BF%AE%E6%94%B9"><span class="toc-text">实战修改</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -551,13 +544,54 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="局域网多虚拟机邮箱服务器SMTP配置"><a href="#局域网多虚拟机邮箱服务器SMTP配置" class="headerlink" title="局域网多虚拟机邮箱服务器SMTP配置"></a>局域网多虚拟机邮箱服务器SMTP配置</h1><h3 id="基于Ubuntu的局域网多虚拟机邮箱服务器SMTP配置。本地虚拟机互发。LINUX服务器配置过程"><a href="#基于Ubuntu的局域网多虚拟机邮箱服务器SMTP配置。本地虚拟机互发。LINUX服务器配置过程" class="headerlink" title="基于Ubuntu的局域网多虚拟机邮箱服务器SMTP配置。本地虚拟机互发。LINUX服务器配置过程"></a>基于Ubuntu的局域网多虚拟机邮箱服务器SMTP配置。本地虚拟机互发。LINUX服务器配置过程</h3><p>本人投稿<br>课程设计用，视频中操作现在看来任然有不足的地方</p>
-<p><strong>基于Ubuntu的局域网多虚拟机邮箱服务器SMTP配置。本地虚拟机互发。LINUX服务器配置过程</strong></p>
-<iframe src="//player.bilibili.com/player.html?bvid=BV1Rc411y7cj&page=1" height='600' width = '800' scrolling="no" border="0" frameborder="yes" framespacing="0" allowfullscreen="true"> </iframe>
+        <h1 id="LVGL开发-2-显示例程的解析"><a href="#LVGL开发-2-显示例程的解析" class="headerlink" title="LVGL开发-2.显示例程的解析"></a>LVGL开发-2.显示例程的解析</h1><p>该博客通过对例程代码进行解析，从而学习LVGL</p>
+<h2 id="例程代码的运行"><a href="#例程代码的运行" class="headerlink" title="例程代码的运行"></a>例程代码的运行</h2><p>该例程为LVGL库自带例程，函数名字为：lv_example_libpng_1();</p>
+<p>导入的步骤省略。运行代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	lv_init();</span><br><span class="line">	lv_port_disp_init();  <span class="comment">// lvgl显示接口初始化,放在lv_init()的后面</span></span><br><span class="line">	lv_example_libpng_1();</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		lv_task_handler();</span><br><span class="line">		delay_us(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行效果为在屏幕中央显示文字。</p>
+<h2 id="函数内容"><a href="#函数内容" class="headerlink" title="函数内容"></a>函数内容</h2><p>该函数的内容如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">lv_example_libpng_1</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">lv_obj_t</span> * label = lv_label_create(lv_screen_active());</span><br><span class="line">	lv_label_set_text(label, <span class="string">&quot;Hello world&quot;</span>);</span><br><span class="line">    lv_obj_center(label);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，该函数前方有一个宏定义判断，效果为显示图片。我们仅对这部分进行解析。</p>
+<p>这段代码使用LVGL创建了一个标签并设置其文本为 “Hello world”，然后将该标签在屏幕上居中显示。</p>
+<h2 id="lv-obj-t"><a href="#lv-obj-t" class="headerlink" title="lv_obj_t"></a>lv_obj_t</h2><p>lv_obj_t是一个结构体类型，代表一个 LVGL 的对象（object）。</p>
+<p>LVGL 中的各种界面元素，如按钮、标签、容器等都是从这个基本的对象类型派生出来的。</p>
+<p>lv_obj_t结构体包含了许多用于描述和操作图形对象的成员变量，例如位置、大小、样式、事件处理函数等。通过对这些成员变量的操作，可以实现对图形界面元素的各种属性和行为的控制。</p>
+<p>查看定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">lv_obj_t</span> &#123;</span></span><br><span class="line">    <span class="type">const</span> <span class="type">lv_obj_class_t</span> * class_p;</span><br><span class="line">    <span class="type">lv_obj_t</span> * parent;</span><br><span class="line">    <span class="type">lv_obj_spec_attr_t</span> * spec_attr;</span><br><span class="line">    <span class="type">lv_obj_style_t</span> * styles;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> LV_OBJ_STYLE_CACHE</span></span><br><span class="line">    <span class="type">uint32_t</span> style_main_prop_is_set;</span><br><span class="line">    <span class="type">uint32_t</span> style_other_prop_is_set;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="type">void</span> * user_data;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> LV_USE_OBJ_ID</span></span><br><span class="line">    <span class="type">void</span> * id;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="type">lv_area_t</span> coords;</span><br><span class="line">    <span class="type">lv_obj_flag_t</span> flags;</span><br><span class="line">    <span class="type">lv_state_t</span> state;</span><br><span class="line">    <span class="type">uint16_t</span> layout_inv : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> readjust_scroll_after_layout : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> scr_layout_inv : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> skip_trans : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> style_cnt  : <span class="number">6</span>;</span><br><span class="line">    <span class="type">uint16_t</span> h_layout   : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> w_layout   : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> is_deleting : <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>发现这个结构体中包含了非常多的成员信息。以下是对该结构体各个成员的解释：</p>
+<ol>
+<li><code>const lv_obj_class_t * class_p</code>：指向对象的类定义结构体的指针，用于确定对象的类型和行为。</li>
+<li><code>lv_obj_t * parent</code>：指向该对象的父对象的指针，用于构建对象层次结构。</li>
+<li><code>lv_obj_spec_attr_t * spec_attr</code>：可能用于存储特定于对象的属性。</li>
+<li><code>lv_obj_style_t * styles</code>：指向对象的样式结构体的指针，用于定义对象的外观。</li>
+<li><code>#if LV_OBJ_STYLE_CACHE</code> 相关部分：可能用于缓存样式相关的属性设置状态。</li>
+<li><code>void * user_data</code>：允许用户关联自定义的数据到对象。</li>
+<li><code>#if LV_USE_OBJ_ID</code> 部分：如果启用了对象 ID 功能，这里将存储对象的唯一标识。</li>
+<li><code>lv_area_t coords</code>：存储对象的坐标和大小信息。</li>
+<li><code>lv_obj_flag_t flags</code>：用于设置对象的各种标志，以控制对象的行为。</li>
+<li><code>lv_state_t state</code>：表示对象的状态，例如正常、按下、禁用等。</li>
+<li><code>uint16_t layout_inv : 1</code>：可能是一个位标志，用于指示布局是否被反转。</li>
+<li><code>uint16_t readjust_scroll_after_layout : 1</code>：位标志，用于指示在布局后是否重新调整滚动。</li>
+<li><code>uint16_t scr_layout_inv : 1</code>：可能与屏幕布局反转相关的标志。</li>
+<li><code>uint16_t skip_trans : 1</code>：位标志，用于指示是否跳过过渡效果。</li>
+<li><code>uint16_t style_cnt : 6</code>：可能用于存储样式的数量。</li>
+<li><code>uint16_t h_layout : 1</code>：位标志，用于指示水平布局状态。</li>
+<li><code>uint16_t w_layout : 1</code>：位标志，用于指示垂直布局状态。</li>
+<li><code>uint16_t is_deleting : 1</code>：位标志，用于指示对象是否正在被删除。</li>
+</ol>
+<p>于是我们就得出，lv_obj_t * label;创建了一个lvgl部件的句柄。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_label_create(lv_screen_active());</span><br></pre></td></tr></table></figure>
+<p>这行代码的作用是在当前活动的屏幕上创建一个标签（label）对象。</p>
+<p>lv_label_create是 LVGL 中的一个函数，用于创建一个标签对象。它返回一个指向新创建的标签对象的指针（类型为lv_obj_t*）。</p>
+<p>lv_screen_active()是另一个 LVGL 函数，它返回当前活动的屏幕对象的指针（同样是lv_obj_t*类型）。这个活动屏幕通常是当前显示在设备上的屏幕，可能是主屏幕或其他活动的显示区域。<br>通过将lv_screen_active()的结果作为参数传递给lv_label_create，新创建的标签将被添加到当前活动的屏幕上，成为该屏幕上的一个图形元素。之后，可以使用其他 LVGL 函数来设置这个标签的属性，如文本内容、位置、大小、样式等。</p>
+<p>那么之后的代码也显而易见了。<br>    lv_label_set_text(label, “Hello world”);</p>
+<pre><code>实现的是对这个标签设置一个text文本信息
 
+lv_obj_center(label);
 
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Rc411y7cj/" title="BV1Rc411y7cj">视频地址</a></p>
-
+实现的是将这个标签置到屏幕中间。
+</code></pre>
+<h2 id="实战修改"><a href="#实战修改" class="headerlink" title="实战修改"></a>实战修改</h2>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>
     </div>

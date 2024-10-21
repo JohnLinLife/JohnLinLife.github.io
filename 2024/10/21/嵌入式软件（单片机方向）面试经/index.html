@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>lvgl开发-2.显示例程解析 | John Life</title>
+  <title>嵌入式软件（单片机方向）面试经 | John Life</title>
   <meta name="keywords" content="">
-  <meta name="description" content="lvgl开发-2.显示例程解析 | John Life">
+  <meta name="description" content="嵌入式软件（单片机方向）面试经 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="photo">
@@ -498,9 +498,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-LVGL-1-3-显示例程解析" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-嵌入式软件（单片机方向）面试经" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">lvgl开发-2.显示例程解析</h1>
+        <h1 class="article-title">嵌入式软件（单片机方向）面试经</h1>
     
     <div class="article-meta">
         
@@ -518,12 +518,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-10-11 20:13:17'>2024-10-11 15:56</time>
+            Created At : <time class="date" title='Updated At: 2024-10-21 18:46:04'>2024-10-21 18:25</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.1k</span>
+        <span>Count:1.9k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -542,7 +542,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LVGL%E5%BC%80%E5%8F%91-2-%E6%98%BE%E7%A4%BA%E4%BE%8B%E7%A8%8B%E7%9A%84%E8%A7%A3%E6%9E%90"><span class="toc-text">LVGL开发-2.显示例程的解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E7%A8%8B%E4%BB%A3%E7%A0%81%E7%9A%84%E8%BF%90%E8%A1%8C"><span class="toc-text">例程代码的运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%86%85%E5%AE%B9"><span class="toc-text">函数内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lv-obj-t"><span class="toc-text">lv_obj_t</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E4%BF%AE%E6%94%B9"><span class="toc-text">实战修改</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%EF%BC%88%E5%8D%95%E7%89%87%E6%9C%BA%E6%96%B9%E5%90%91%EF%BC%89%E9%9D%A2%E8%AF%95%E7%BB%8F"><span class="toc-text">嵌入式软件（单片机方向）面试经</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1%E6%96%87"><span class="toc-text">常见八股文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">volatile关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E4%B8%8E%E6%A0%88%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">堆与栈有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E4%B8%AD%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%EF%BC%9F"><span class="toc-text">C++中类成员的访问权限？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E7%89%87%E6%9C%BA%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">单片机启动流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E5%93%8D%E5%BA%94%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">中断响应执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%E6%B3%A2%E7%89%B9%E7%8E%87"><span class="toc-text">单片机的串口通信波特率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2C%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%BC%80%E6%BC%8F%E8%BE%93%E5%87%BA"><span class="toc-text">I2C协议的开漏输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2C%E6%9C%80%E5%A4%9A%E8%83%BD%E6%90%AD%E8%BD%BD%E5%A4%9A%E5%B0%91%E4%BB%8E%E6%9C%BA%E8%AE%BE%E5%A4%87"><span class="toc-text">I2C最多能搭载多少从机设备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8DSPI%E5%8D%8F%E8%AE%AE"><span class="toc-text">介绍SPI协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPI%E9%80%9A%E8%AE%AF%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%E7%A7%8D%EF%BC%89"><span class="toc-text">SPI通讯模式（四种）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DMA%E5%A4%A7%E6%9D%82%E7%83%A9"><span class="toc-text">DMA大杂烩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RTOS%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-text">RTOS的内存管理</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -558,54 +558,46 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="LVGL开发-2-显示例程的解析"><a href="#LVGL开发-2-显示例程的解析" class="headerlink" title="LVGL开发-2.显示例程的解析"></a>LVGL开发-2.显示例程的解析</h1><p>该博客通过对例程代码进行解析，从而学习LVGL</p>
-<h2 id="例程代码的运行"><a href="#例程代码的运行" class="headerlink" title="例程代码的运行"></a>例程代码的运行</h2><p>该例程为LVGL库自带例程，函数名字为：lv_example_libpng_1();</p>
-<p>导入的步骤省略。运行代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	lv_init();</span><br><span class="line">	lv_port_disp_init();  <span class="comment">// lvgl显示接口初始化,放在lv_init()的后面</span></span><br><span class="line">	lv_example_libpng_1();</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		lv_task_handler();</span><br><span class="line">		delay_us(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行效果为在屏幕中央显示文字。</p>
-<h2 id="函数内容"><a href="#函数内容" class="headerlink" title="函数内容"></a>函数内容</h2><p>该函数的内容如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">lv_example_libpng_1</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">lv_obj_t</span> * label = lv_label_create(lv_screen_active());</span><br><span class="line">	lv_label_set_text(label, <span class="string">&quot;Hello world&quot;</span>);</span><br><span class="line">    lv_obj_center(label);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>需要注意的是，该函数前方有一个宏定义判断，效果为显示图片。我们仅对这部分进行解析。</p>
-<p>这段代码使用LVGL创建了一个标签并设置其文本为 “Hello world”，然后将该标签在屏幕上居中显示。</p>
-<h2 id="lv-obj-t"><a href="#lv-obj-t" class="headerlink" title="lv_obj_t"></a>lv_obj_t</h2><p>lv_obj_t是一个结构体类型，代表一个 LVGL 的对象（object）。</p>
-<p>LVGL 中的各种界面元素，如按钮、标签、容器等都是从这个基本的对象类型派生出来的。</p>
-<p>lv_obj_t结构体包含了许多用于描述和操作图形对象的成员变量，例如位置、大小、样式、事件处理函数等。通过对这些成员变量的操作，可以实现对图形界面元素的各种属性和行为的控制。</p>
-<p>查看定义：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">lv_obj_t</span> &#123;</span></span><br><span class="line">    <span class="type">const</span> <span class="type">lv_obj_class_t</span> * class_p;</span><br><span class="line">    <span class="type">lv_obj_t</span> * parent;</span><br><span class="line">    <span class="type">lv_obj_spec_attr_t</span> * spec_attr;</span><br><span class="line">    <span class="type">lv_obj_style_t</span> * styles;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> LV_OBJ_STYLE_CACHE</span></span><br><span class="line">    <span class="type">uint32_t</span> style_main_prop_is_set;</span><br><span class="line">    <span class="type">uint32_t</span> style_other_prop_is_set;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="type">void</span> * user_data;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> LV_USE_OBJ_ID</span></span><br><span class="line">    <span class="type">void</span> * id;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="type">lv_area_t</span> coords;</span><br><span class="line">    <span class="type">lv_obj_flag_t</span> flags;</span><br><span class="line">    <span class="type">lv_state_t</span> state;</span><br><span class="line">    <span class="type">uint16_t</span> layout_inv : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> readjust_scroll_after_layout : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> scr_layout_inv : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> skip_trans : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> style_cnt  : <span class="number">6</span>;</span><br><span class="line">    <span class="type">uint16_t</span> h_layout   : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> w_layout   : <span class="number">1</span>;</span><br><span class="line">    <span class="type">uint16_t</span> is_deleting : <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>发现这个结构体中包含了非常多的成员信息。以下是对该结构体各个成员的解释：</p>
-<ol>
-<li><code>const lv_obj_class_t * class_p</code>：指向对象的类定义结构体的指针，用于确定对象的类型和行为。</li>
-<li><code>lv_obj_t * parent</code>：指向该对象的父对象的指针，用于构建对象层次结构。</li>
-<li><code>lv_obj_spec_attr_t * spec_attr</code>：可能用于存储特定于对象的属性。</li>
-<li><code>lv_obj_style_t * styles</code>：指向对象的样式结构体的指针，用于定义对象的外观。</li>
-<li><code>#if LV_OBJ_STYLE_CACHE</code> 相关部分：可能用于缓存样式相关的属性设置状态。</li>
-<li><code>void * user_data</code>：允许用户关联自定义的数据到对象。</li>
-<li><code>#if LV_USE_OBJ_ID</code> 部分：如果启用了对象 ID 功能，这里将存储对象的唯一标识。</li>
-<li><code>lv_area_t coords</code>：存储对象的坐标和大小信息。</li>
-<li><code>lv_obj_flag_t flags</code>：用于设置对象的各种标志，以控制对象的行为。</li>
-<li><code>lv_state_t state</code>：表示对象的状态，例如正常、按下、禁用等。</li>
-<li><code>uint16_t layout_inv : 1</code>：可能是一个位标志，用于指示布局是否被反转。</li>
-<li><code>uint16_t readjust_scroll_after_layout : 1</code>：位标志，用于指示在布局后是否重新调整滚动。</li>
-<li><code>uint16_t scr_layout_inv : 1</code>：可能与屏幕布局反转相关的标志。</li>
-<li><code>uint16_t skip_trans : 1</code>：位标志，用于指示是否跳过过渡效果。</li>
-<li><code>uint16_t style_cnt : 6</code>：可能用于存储样式的数量。</li>
-<li><code>uint16_t h_layout : 1</code>：位标志，用于指示水平布局状态。</li>
-<li><code>uint16_t w_layout : 1</code>：位标志，用于指示垂直布局状态。</li>
-<li><code>uint16_t is_deleting : 1</code>：位标志，用于指示对象是否正在被删除。</li>
-</ol>
-<p>于是我们就得出，lv_obj_t * label;创建了一个lvgl部件的句柄。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_label_create(lv_screen_active());</span><br></pre></td></tr></table></figure>
-<p>这行代码的作用是在当前活动的屏幕上创建一个标签（label）对象。</p>
-<p>lv_label_create是 LVGL 中的一个函数，用于创建一个标签对象。它返回一个指向新创建的标签对象的指针（类型为lv_obj_t*）。</p>
-<p>lv_screen_active()是另一个 LVGL 函数，它返回当前活动的屏幕对象的指针（同样是lv_obj_t*类型）。这个活动屏幕通常是当前显示在设备上的屏幕，可能是主屏幕或其他活动的显示区域。<br>通过将lv_screen_active()的结果作为参数传递给lv_label_create，新创建的标签将被添加到当前活动的屏幕上，成为该屏幕上的一个图形元素。之后，可以使用其他 LVGL 函数来设置这个标签的属性，如文本内容、位置、大小、样式等。</p>
-<p>那么之后的代码也显而易见了。<br>    lv_label_set_text(label, “Hello world”);</p>
-<pre><code>实现的是对这个标签设置一个text文本信息
+        <h1 id="嵌入式软件（单片机方向）面试经"><a href="#嵌入式软件（单片机方向）面试经" class="headerlink" title="嵌入式软件（单片机方向）面试经"></a>嵌入式软件（单片机方向）面试经</h1><h2 id="常见八股文"><a href="#常见八股文" class="headerlink" title="常见八股文"></a>常见八股文</h2><h3 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h3><p>volatile的意思是”易变的”，这个关键字主要是防止编译器对变量进行优化。即告诉编译器每次存取该变量的时候都要从内存去存取而不是使用它之前在寄存器中的备份.</p>
+<p>应用场景：</p>
+<p>（1）并行设备的硬件寄存器。存储器映射的硬件寄存器通常加volatile，因为寄存器随时可以被外设硬件修改。当声明指向设备寄存器的指针时一定要用volatile，它会告诉编译器不要对存储在这个地址的数据进行假设。</p>
+<p>（2） 一个中断服务程序中修改的供其他程序检测的变量。volatile提醒编译器，它后面所定义的变量随时都有可能改变。因此编译后的程序每次需要存储或读取这个变量的时候，都会直接从变量地址中读取数据。如果没有volatile关键字，则编译器可能优化读取和存储，可能暂时使用寄存器中的值，如果这个变量由别的程序更新了的话，将出现不一致的现象。</p>
+<p>（3）多线程应用中被几个任务共享的变量。</p>
+<h3 id="堆与栈有什么区别？"><a href="#堆与栈有什么区别？" class="headerlink" title="堆与栈有什么区别？"></a>堆与栈有什么区别？</h3><p>（a）申请方式<br>栈的空间由操作系统自动分配&#x2F;释放，堆上的空间手动分配&#x2F;释放。</p>
+<p>（b）申请大小的限制栈空间有限。<br>在Wind  ows下,栈是向低地址扩展的数据结构，是一块连续的内存的区域。这句话的意思是栈顶的地址和栈的最大容量是系统预先规定好的，在WINDOWS下，栈的大小是2M（也有的说是1M，总之是 一个编译时就确定的常数），如果申请的空间超过栈的剩余空间时，将提示 overflow。因此，能从栈获得的空间较小堆是很大的自由存储区。堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用 链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。</p>
+<p>（c）申请效率<br>栈由系统自动分配，速度较快。但程序员是无法控制的。 堆是由new分配的内存，一般速度比较慢，而且容易产生内存碎片,不过用起来最方便.</p>
+<h3 id="C-中类成员的访问权限？"><a href="#C-中类成员的访问权限？" class="headerlink" title="C++中类成员的访问权限？"></a>C++中类成员的访问权限？</h3><p>无论成员被声明为 public、protected 还是 private，都是可以互相访问的，没有访问权限的限制。在类的外部 （定义类的代码之外），只能通过对象访问成员，并且通过对象只能访问 public 属性的成员，不能访问 private、protected 属性的成员。</p>
+<p>（a）protected:受保护的，类内和子类可直接访问，也就是说，基类中有protected成员，子类继承于基类，那么也可以访问基类的protected成员，要是基类是private成员，则对于子类也是隐藏的，不可访问。</p>
+<p>（b）private:私有的，只有类内的成员函数才可以访问。</p>
+<h3 id="单片机启动流程"><a href="#单片机启动流程" class="headerlink" title="单片机启动流程"></a>单片机启动流程</h3><p>单片机上电后一直到准备好C语言运行环境并跳转到main函数执行总共经历了5个步骤：</p>
+<p>1.内核初始化;</p>
+<p>2.强制PC指针指向中断向量表的复位中断向量执行复位中断函数;</p>
+<p>3.在复位中断函数中调用 SystemInit 函数，初始化时钟，配置中断向量表等</p>
+<p>4.调用 __main 函数完成全局&#x2F;静态变量&#x2F;常量的初始化和重定位工作，初始化堆栈和库函数</p>
+<p>5.跳转到main函数中执行</p>
+<h3 id="中断响应执行流程"><a href="#中断响应执行流程" class="headerlink" title="中断响应执行流程"></a>中断响应执行流程</h3><p>中断的响应流程：cpu接受中断-&gt;保存中断上下文跳转到中断处理历程-&gt;执行中断上半部-&gt;执行中断下半部-&gt;恢复中断上下文。</p>
+<h3 id="单片机的串口通信波特率"><a href="#单片机的串口通信波特率" class="headerlink" title="单片机的串口通信波特率"></a>单片机的串口通信波特率</h3><p>波特率 &#x3D; 时钟频率&#x2F;(16*分频系数)</p>
+<h3 id="I2C协议的开漏输出"><a href="#I2C协议的开漏输出" class="headerlink" title="I2C协议的开漏输出"></a>I2C协议的开漏输出</h3><p>开漏输出：高电平无驱动能力，需要借助外部上拉输出高电平。</p>
+<p>因为I2C协议是支持多个主设备与多个从设备在一条总线上的，此时就会有多个GPIO口连接在同一条总线上，就势必会出现输出高、低电平不统一的情况，如果采用推挽输出时，就可能会出现某个GPIO的Vcc和GND连接在一起造成短路的情况，当你采用开漏输出时，因为有上拉电阻的存在就可以避免这一问题的出现。</p>
+<p>总线通过上拉电阻接到电源。当I2C设备空闲时，会输出高阻态，而当所有设备都空闲，都输出高阻态时，由上拉电阻把总线拉成高电平。</p>
+<p>多个主机同时使用总线时，为了防止数据冲突，会利用仲裁方式决定由哪个设备占用总线。</p>
+<p>SDA线在输入时配置成上下拉输入模式。</p>
+<p>数据传送过程中，先传送最高位（MSB），每一个被传送的字节后面都必须跟随着1位应答位（即一帧共有9位长）。</p>
+<h3 id="I2C最多能搭载多少从机设备"><a href="#I2C最多能搭载多少从机设备" class="headerlink" title="I2C最多能搭载多少从机设备"></a>I2C最多能搭载多少从机设备</h3><p>根据I2C的寻址位最大地址来说，从机地址是7位，那么最多可以容纳127个。减去广播地址与0x00。</p>
+<p>但是其实从使用上来说，推荐是8个以下。</p>
+<h3 id="介绍SPI协议"><a href="#介绍SPI协议" class="headerlink" title="介绍SPI协议"></a>介绍SPI协议</h3><p>CS线（NSS线）：从设备选择线，也称为片选信号线。哪个NSS线设为低电平，就是选中对应的模块。NSS线为高电平时，为结束信号。</p>
+<p>SCK：时钟信号线，用于通讯主机产生，决定了通讯的速率，STM32的SPI时钟频率最大为fPCLK&#x2F;2，一般通讯过程中，通讯速率受限于低速设备。</p>
+<p>MOSI：主机发送，从机接收端口。</p>
+<p>MISO：主机接收，从机发送端口。</p>
+<h3 id="SPI通讯模式（四种）"><a href="#SPI通讯模式（四种）" class="headerlink" title="SPI通讯模式（四种）"></a>SPI通讯模式（四种）</h3><p>四种通讯模式最大的区别：总线空闲时 SCK 的时钟状态以及数据采样时刻。</p>
+<p>因此，在此引入“时钟极性CPOL”和“时钟相位CPHA”概念。</p>
+<p>这两项的组合就有4种模式，分别对时钟的极性进行反转和对相位进行偏移与否。</p>
+<h3 id="DMA大杂烩"><a href="#DMA大杂烩" class="headerlink" title="DMA大杂烩"></a>DMA大杂烩</h3><p>DMA存储</p>
+<p>DMA主要是用来搬运数据，但是不经过CPU，数据直接从外设到存储器，或者从存储器到存储器，存储器可以是SRAM或者FLASH。</p>
+<p>DMA包含DMA1（7通道）和DMA2（5通道）。每个通道可以接收多个外设请求，但是同一时间只能接收一个，不能同时接收多个。</p>
+<p><strong>仲裁器</strong>多个DMA通道请求，由仲裁器管理。分两个阶段，先软件阶段：根据优先级设置（4个优先级）判断，如果两个通道优先级一样，则进入硬件阶段，根据通道号决定谁优先级高，通道0高于通道1。</p>
+<h3 id="RTOS的内存管理"><a href="#RTOS的内存管理" class="headerlink" title="RTOS的内存管理"></a>RTOS的内存管理</h3><p><img src="https://i-blog.csdnimg.cn/direct/bdc943f5cb734953b60386b3f1a3fe8e.png" alt="搬运"></p>
 
-lv_obj_center(label);
-
-实现的是将这个标签置到屏幕中间。
-</code></pre>
-<h2 id="实战修改"><a href="#实战修改" class="headerlink" title="实战修改"></a>实战修改</h2>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>
     </div>

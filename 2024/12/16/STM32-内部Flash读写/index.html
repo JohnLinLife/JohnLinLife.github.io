@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>FreeRTOS笔记-事件组 | John Life</title>
-  <meta name="keywords" content=" RTOS ">
-  <meta name="description" content="FreeRTOS笔记-事件组 | John Life">
+  <title>STM32-内部Flash读写 | John Life</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="STM32-内部Flash读写 | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="test">
 <meta property="og:type" content="website">
@@ -511,9 +511,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-rtos-event-group" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-STM32-内部Flash读写" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">FreeRTOS笔记-事件组</h1>
+        <h1 class="article-title">STM32-内部Flash读写</h1>
     
     <div class="article-meta">
         
@@ -528,22 +528,15 @@
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color5">RTOS</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-12-16 20:05:33'>2024-12-16 20:02</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-25 21:53:41'>2024-09-19 15:14</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:477</span>
+        <span>Count:1.3k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -562,7 +555,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E7%BB%84-event-group"><span class="toc-text">事件组(event group)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E7%BB%84%E7%9A%84%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3"><span class="toc-text">事件组的简单理解</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#STM32%E7%9A%84%E5%86%85%E9%83%A8Flash%E6%93%8D%E4%BD%9C"><span class="toc-text">STM32的内部Flash操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%86%85%E9%83%A8%E5%82%A8%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="toc-text">1 内部储存空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%86%85%E9%83%A8Flash%E7%9A%84%E6%9E%84%E6%88%90"><span class="toc-text">2 内部Flash的构成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Flash%E7%9A%84%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C"><span class="toc-text">3 Flash的读写操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Flash%E5%86%99%E5%85%A5"><span class="toc-text">3.1 Flash写入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1%E8%A7%A3%E9%94%81"><span class="toc-text">3.1.1解锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-%E6%93%A6%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-text">3.1.2 擦除操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-%E5%86%99%E5%85%A5%E6%93%8D%E4%BD%9C"><span class="toc-text">3.1.3 写入操作</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -578,29 +571,38 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="事件组-event-group"><a href="#事件组-event-group" class="headerlink" title="事件组(event group)"></a>事件组(event group)</h1><h3 id="事件组的简单理解"><a href="#事件组的简单理解" class="headerlink" title="事件组的简单理解"></a>事件组的简单理解</h3><p>事件组由多位bit位组成，大小取决于多少位的单片机。通过事件组，可以对多个事件进行逻辑的触发进行处理。</p>
-<p><strong>事件组的代码实例</strong><br>事件组的接口函数在event_groups.c里面，需要手动引入。（根据是否需要进行裁剪项目大小）<br>事件组的创建，需要事件组的句柄。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EventGroupHandle_t EventGroup_Handle_1;</span><br><span class="line">EventGroup_Handle_1 = xEventGroupCreate();</span><br></pre></td></tr></table></figure>
-<p>将创建函数的返回值赋给事件组的句柄，即将这个句柄赋予事件组的特性。</p>
-<p>写事件组，变量1为句柄，变量2是对该事件组的哪一位进行写操作。在该示例代码中，使用该接口函数就是对事件组中的某一位<br>进行写操作；如（1&lt;&lt;0)就是对0x01位移0位，其保持原位任然为0x01.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xEventGroupSetBits(EventGroup_Handle_1, (1&lt;&lt;0));</span><br></pre></td></tr></table></figure>
+        <h1 id="STM32的内部Flash操作"><a href="#STM32的内部Flash操作" class="headerlink" title="STM32的内部Flash操作"></a>STM32的内部Flash操作</h1><p>我们在设计单片机程序的时候，部分的需求是需要有掉电不丢失的功能。我们可能会使用EEPROM这种存储设备来进行数据的存储保证数据掉电不丢失。而在实际的应用场景中，我们并没有太多的数据量需要进行存储，可能只是一些程序上的参数需要保存。这个使用使用EEPROM就显得有点大材小用，从产品的角度思考这个模块也会给整个项目增加较大的成本。</p>
+<p>此时使用单片机内部自带的flash来进行部分数据的掉电不丢失就非常极具性价比(虽然内部flash的读写寿命要少于EEPROM)</p>
+<h2 id="1-内部储存空间"><a href="#1-内部储存空间" class="headerlink" title="1 内部储存空间"></a>1 内部储存空间</h2><p>stm32的flash地址起始于0x0800 0000，结束地址是0x0800 0000加上芯片实际的flash大小，不同的芯片flash大小不同。</p>
+<p>RAM起始地址是0x2000 0000，结束地址是0x2000 0000加上芯片的RAM大小。不同的芯片RAM也不同。</p>
+<p>stm32的外设地址从0x4000 0000开始，可以看到在库文件中，是通过基于0x4000 0000地址的偏移量来操作寄存器以及外设的。</p>
+<p>一般情况下，程序文件是从 0x0800 0000 地址写入，这个是STM32开始执行的地方，0x0800 0004是STM32的中断向量表的起始地址。 </p>
+<p>程序的写入地址从0x0800 0000开始的，其大小为0x80000也就是512K的空间，换句话说就是告诉编译器flash的空间是从0x0800 0000-0x0808 0000，RAM的地址从0x2000 0000开始，大小为0x10000也就是64K的RAM。这与STM32的内存地址映射关系是对应的。</p>
+<p>M3复位后，从0x08000004取出复位中断的地址，并且跳转到复位中断程序，中断执行完之后会跳到我们的main函数，main函数里边一般是一个死循环，进去后就不会再退出，当有中断发生的时候，M3将PC指针强制跳转回中断向量表，然后根据中断源进入对应的中断函数，执行完中断函数之后，再次返回main函数中。</p>
+<h2 id="2-内部Flash的构成"><a href="#2-内部Flash的构成" class="headerlink" title="2 内部Flash的构成"></a>2 内部Flash的构成</h2><p>以STM32F103C8T6为例。它的Flash大小为64K x 8bit，即64k个字节的数据。</p>
+<p>我们通常Page的方式来区分这些存储空间。在STM32的中容量和小容量的型号中，一般以1K字节作为一个扇区；在大容量的型号中，会以2K作为一个扇区的容量。</p>
+<p>内部Flash的启始地址是0x8000 0000，那么以1K作为扇区的容量，那么第0页的范围就是0x8000 0000 ~ 0x8000 03FF(即是1024-1&#x3D;1023&#x3D;0x03FF)。那么STM32F103C8T6的内部Flash空间是64K的大小，所以它的最大页为。以下是部分页的范围：</p>
+<hr>
+<p>page0： 0x8000 0000 ~ 0x8000 03FF</p>
+<p>page1： 0x8000 0400 ~ 0x8000 07FF</p>
+<p>page2： 0x8000 0800 ~ 0x8000 0BFF</p>
+<p>page3： 0x8000 0C00 ~ 0x8000 0FFF</p>
+<p>page4： 0X8000 1000 ~ 0X8000 13FF</p>
+<p>…….</p>
+<p>page62: 0x8000 F800 ~ 0x8000 FBFF</p>
+<p>page63: 0x8000 FC00 ~ 0x8000 FFFF</p>
+<hr>
+<h2 id="3-Flash的读写操作"><a href="#3-Flash的读写操作" class="headerlink" title="3 Flash的读写操作"></a>3 Flash的读写操作</h2><h3 id="3-1-Flash写入"><a href="#3-1-Flash写入" class="headerlink" title="3.1 Flash写入"></a>3.1 Flash写入</h3><h4 id="3-1-1解锁"><a href="#3-1-1解锁" class="headerlink" title="3.1.1解锁"></a>3.1.1解锁</h4><p>为了防止误操作，在修改内存的时候需要我们对控制寄存器FLASH_CR进行解锁。解锁的方法是对FPEC键寄存器FLASH_KEYR写入解锁的秘钥。</p>
+<p>秘钥的内容是0x4567 0123 CDEF 89AB,需要按顺序分别写入才能进行解锁。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*Flash解锁函数*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">Flash_unlock</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line"><span class="keyword">if</span> ((FLASH-&gt;CR &amp; FLASH_CR_LOCK) != RESET) &#123;<span class="comment">//判断LOCK位</span></span><br><span class="line">FLASH-&gt;KEYR = <span class="number">0x45670123</span>;</span><br><span class="line">FLASH-&gt;KEYR = <span class="number">0xCDEF89AB</span>; </span><br><span class="line"><span class="comment">/*若LOCK位不为1，则执行解锁程序，向Flash_KEYR寄存器写入解锁密钥，密钥是唯一的，</span></span><br><span class="line"><span class="comment">   一旦写错，就会锁死，只能复位后才能操作Flash*/</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>读事件组的接口函数使用如下，使用效果为等待事件组某些条件成立</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xEventGroupWaitBits(EventGroup_Handle_1,((1&lt;&lt;0)|(1&lt;&lt;1)),pdTRUE,pdTRUE, portMAX_DELAY);</span><br></pre></td></tr></table></figure>
-<p>该接口函数的传入参数如下：</p>
-<ul>
-<li>1、句柄	，需要传入事件组的句柄</li>
-<li>2、事件位，该位置输入需要读取的位置，可同时读取多位</li>
-<li>3、读取是否清除事件位	，输入pdTRUE或者pdFALSE,说明是否在读取后清除</li>
-<li>4、True就是与条件,或者是或条件	</li>
-<li>5、等待时间，portMAX-DELAY即为阻塞直到达成条件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xEventGroupWaitBits(EventGroup_Handle_1,((1&lt;&lt;0)|(1&lt;&lt;1)),pdTRUE,pdTRUE, portMAX_DELAY);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>事件组不能传输数据，我们可以用队列进行数据的传输，通过事件组来通知数据准备完成。</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>事件组的同步点</strong>:<br>这个函数可以等待事件完成，条件是所有条件的事件组都存在，即可继续运行。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xEventGroupSync(EventGroup_Handle_2, 事件, 所有条件事件, portMAX_DELAY);</span><br></pre></td></tr></table></figure>
+<h4 id="3-1-2-擦除操作"><a href="#3-1-2-擦除操作" class="headerlink" title="3.1.2 擦除操作"></a>3.1.2 擦除操作</h4><p>擦除和写入操作都需要先对Flash进行解锁，毕竟Flash擦除写入是一个比较严谨的过程，操作不当可能会导致系统故障单片机卡死。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Flash擦除函数*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">EraseFlash</span><span class="params">(<span class="type">void</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    Flash_unlock();                             <span class="comment">//解锁                        </span></span><br><span class="line">    SET_BIT(FLASH-&gt;CR, FLASH_CR_PER);           <span class="comment">//置位扇区擦除控制位</span></span><br><span class="line">    WRITE_REG(FLASH-&gt;AR, <span class="number">0x08007C00</span>);           <span class="comment">//对应扇区起始地址</span></span><br><span class="line">    SET_BIT(FLASH-&gt;CR, FLASH_CR_STRT);          <span class="comment">//开始扇区清除</span></span><br><span class="line">    <span class="keyword">while</span> ((FLASH-&gt;SR &amp; (FLASH_SR_BSY | FLASH_SR_EOP)) != <span class="number">0x20</span>)    <span class="comment">//等待擦除完毕</span></span><br><span class="line">         ;</span><br><span class="line">     FLASH-&gt;SR |= FLASH_SR_EOP;                 <span class="comment">//清除标志位</span></span><br><span class="line">     FLASH-&gt;CR = <span class="number">0x80</span>;                          <span class="comment">//重新上锁，擦除完成</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在程序中，擦除操作其实是以扇区为单位进行的，上方的代码中则是固定的擦除操作。其实原理就是首先将擦除控制位置位，接着讲扇区的启始地址写入ADDR寄存器（代码中是AR)，扇区的单位是以单片机型号界定。接着置位擦除开始寄存器。等待擦除完成即可。完成后需要重新上锁。</p>
+<h3 id="3-1-3-写入操作"><a href="#3-1-3-写入操作" class="headerlink" title="3.1.3 写入操作"></a>3.1.3 写入操作</h3><p>写入操作建立在擦除之后，因为在写入之前需要进行擦除。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Flash写入函数*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">putFlash</span><span class="params">(<span class="type">void</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line"> 	EraseFlash();                       </span><br><span class="line">    Flash_unlock();                             <span class="comment">//解锁</span></span><br><span class="line">    flashPtr = (__IO <span class="type">uint16_t</span> *) <span class="number">0x08007C00</span>;    <span class="comment">//选择写入地址，只能是擦除的扇区内</span></span><br><span class="line">    SET_BIT(FLASH-&gt;CR, FLASH_CR_PG);            <span class="comment">//置位Flash写入控制位</span></span><br><span class="line">     *flashPtr = Flash_Data;                    <span class="comment">//写入数据到flashPrt地址对应空间中</span></span><br><span class="line">     <span class="keyword">while</span> ((FLASH-&gt;SR &amp; (FLASH_SR_BSY | FLASH_SR_EOP)) != <span class="number">0x20</span>)  <span class="comment">//等待写入完成</span></span><br><span class="line">        ;</span><br><span class="line">     FLASH-&gt;SR |= FLASH_SR_EOP;                 <span class="comment">//清除标志位</span></span><br><span class="line">     FLASH-&gt;CR = <span class="number">0x80</span>;                          <span class="comment">//重新上锁</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>

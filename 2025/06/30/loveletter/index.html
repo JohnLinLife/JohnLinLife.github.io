@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>FreeRTOS笔记-中断管理 | John Life</title>
-  <meta name="keywords" content=" RTOS ">
-  <meta name="description" content="FreeRTOS笔记-中断管理 | John Life">
+  <title>letter | John Life</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="letter | John Life">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="test">
 <meta property="og:type" content="website">
@@ -535,9 +535,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-rtos-fromisr" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-loveletter" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">FreeRTOS笔记-中断管理</h1>
+        <h1 class="article-title">letter</h1>
     
     <div class="article-meta">
         
@@ -547,27 +547,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="STM32">STM32</a>
+            <a  data-rel="-奇思">-奇思</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color5">RTOS</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2025-07-01 00:00:29'>2025-06-30 23:37</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-09-25 21:46:09'>2024-09-20 15:48</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:443</span>
+        <span>Count:142</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -586,7 +579,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E7%AE%A1%E7%90%86-Interrupt-Management"><span class="toc-text">中断管理(Interrupt Management)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%B8%AD%E6%96%AD%E7%AE%A1%E7%90%86%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">对中断管理的理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81API%E5%87%BD%E6%95%B0"><span class="toc-text">主要API函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xHigherPriorityTaskWoken%E5%8F%82%E6%95%B0"><span class="toc-text">xHigherPriorityTaskWoken参数</span></a></li></ol></li></ol></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -602,18 +595,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="中断管理-Interrupt-Management"><a href="#中断管理-Interrupt-Management" class="headerlink" title="中断管理(Interrupt Management)"></a>中断管理(Interrupt Management)</h1><h2 id="对中断管理的理解"><a href="#对中断管理的理解" class="headerlink" title="对中断管理的理解"></a>对中断管理的理解</h2><p>RTOS中，配置了专门用于中断函数里面的API。（函数一般以FromISR结尾）<br>主要是考虑到中断回调函数不能运行长时间的指令，以写队列为例：</p>
-<p>xQueueSendToBackFromISR区别与xQueueSendToBack，在参数上削减了等待时间，<br>主要是考虑到中断函数中不能有较长的等待时间。<br>在调度上，如果被唤醒的任务优先级更高，也不会即可调度，而是记录下来表示需要调度。<br>在阻塞问题上，如果写的队列是满的，FromISR函数会即刻返回错误信息，而不会进行阻塞等待。</p>
-<h3 id="主要API函数"><a href="#主要API函数" class="headerlink" title="主要API函数"></a>主要API函数</h3><p><img src="/../photo/rtos-list-923.png" alt="主要API表格"></p>
-<h3 id="xHigherPriorityTaskWoken参数"><a href="#xHigherPriorityTaskWoken参数" class="headerlink" title="xHigherPriorityTaskWoken参数"></a>xHigherPriorityTaskWoken参数</h3><p>如果任务在运行的过程中，由于数据传输可能会导致高优先级的任务被唤醒，<br>并且高优先级的任务会抢占运行，在中断中我们是不希望发生这样的事情的。</p>
-<p>可以看到，在任务中调用API函数可能导致任务阻塞、任务切换，这叫做”context switch”，上下文切<br>换。这个函数可能很长时间才返回，在函数的内部实现了任务切换。</p>
-<p>xQueueSendToBackFromISR() 函数也可能导致任务切换，但是不会在函数内部进行切换，而是返回一<br>个参数：表示是否需要切换。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BaseType_t xHigherPriorityTaskWoken = pdFALSE;</span><br><span class="line">xQueueSendToBackFromISR(xQueue, pvItemToQueue, &amp;xHigherPriorityTaskWoken);</span><br><span class="line">if（xHigherPriorityTaskWoken == pdTRUE)</span><br><span class="line">&#123;</span><br><span class="line">	//任务切换</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在示例代码中，xHigherPriorityTaskWoken用于保存函数的结果，<br>在外部对该结果进行判断，是否需要执行任务调度。</p>
-<p>外部中断触发定时器实例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void EXTI0_IRQHandler(void)</span><br><span class="line">&#123;</span><br><span class="line">	BaseType_t xHigherPriorityTaskWoken;</span><br><span class="line">	if(EXTI_GetITStatus(EXTI_Line0))</span><br><span class="line">	&#123;</span><br><span class="line">		</span><br><span class="line">		xTimerResetFromISR(MyTimer_Handle_1, &amp;xHigherPriorityTaskWoken);</span><br><span class="line">		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);</span><br><span class="line">		</span><br><span class="line">		EXTI_ClearFlag(EXTI_Line0);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>portYIELD_FROM_ISR(xHigherPriorityTaskWoken)；代码为触发调度。</p>
+        <p><strong>亲爱的时钟：</strong></p>
+<ul>
+<li><p>你好，见字如面。</p>
+</li>
+<li><p>你曾经问过我成为大人的烦恼是什么</p>
+</li>
+<li><p>我问喧嚣的城市，它无法告诉我答案</p>
+</li>
+<li><p>霓虹的夜景，在我的眼里就像王家卫的镜头</p>
+</li>
+<li><p>我忘记了我给你的答案，因为我也只是一个孩子</p>
+</li>
+<li><p>而你长大了</p>
+</li>
+<li><p>路还很长，只是成长的过程中注定绘失去什么</p>
+</li>
+<li><p>那转瞬即逝的烟火，仲夏夜的蝉鸣</p>
+</li>
+<li><p>我们无法预知旅途的终点</p>
+</li>
+<li><p>那就深呼吸感受路边的花香吧</p>
+</li>
+</ul>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以邮件至 1186703947@qq.com </span>

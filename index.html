@@ -1,256 +1,122 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>John Life - 嵌入式开发 | 技术博客 | 生活记录</title><meta name="author" content="Johan"><meta name="copyright" content="Johan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="分享嵌入式开发经验、技术学习和生活感悟">
-<meta property="og:type" content="website">
-<meta property="og:title" content="John Life">
-<meta property="og:url" content="https://johnlinlife.github.io/index.html">
-<meta property="og:site_name" content="John Life">
-<meta property="og:description" content="分享嵌入式开发经验、技术学习和生活感悟">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://johnlinlife.github.io/img/avatar.jpg">
-<meta property="article:author" content="Johan">
-<meta property="article:tag" content="嵌入式">
-<meta property="article:tag" content="STM32">
-<meta property="article:tag" content="RTOS">
-<meta property="article:tag" content="Linux">
-<meta property="article:tag" content="技术博客">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://johnlinlife.github.io/img/avatar.jpg"><script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "John Life",
-  "alternateName": [
-    "嵌入式开发 | 技术博客 | 生活记录",
-    "johnlinlife.github.io"
-  ],
-  "url": "https://johnlinlife.github.io/"
-}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://johnlinlife.github.io/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
-    (() => {
-      
-    const saveToLocal = {
-      set: (key, value, ttl) => {
-        if (!ttl) return
-        const expiry = Date.now() + ttl * 86400000
-        localStorage.setItem(key, JSON.stringify({ value, expiry }))
-      },
-      get: key => {
-        const itemStr = localStorage.getItem(key)
-        if (!itemStr) return undefined
-        const { value, expiry } = JSON.parse(itemStr)
-        if (Date.now() > expiry) {
-          localStorage.removeItem(key)
-          return undefined
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Life - 测试页面</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
         }
-        return value
-      }
-    }
-
-    window.btf = {
-      saveToLocal,
-      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
-        script.onload = script.onreadystatechange = () => {
-          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        .container {
+            text-align: center;
+            margin-top: 50px;
         }
-        script.onerror = reject
-        document.head.appendChild(script)
-      }),
-      getCSS: (url, id) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onload = link.onreadystatechange = () => {
-          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        h1 {
+            color: #333;
         }
-        link.onerror = reject
-        document.head.appendChild(link)
-      }),
-      addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
-        const globalFn = parent.globalFn || {}
-        globalFn[key] = globalFn[key] || {}
-        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
-        parent.globalFn = globalFn
-      }
-    }
-  
-      
-      const activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        .status {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: #f5f5f5;
         }
-      }
-      const activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
-      }
-
-      btf.activateDarkMode = activateDarkMode
-      btf.activateLightMode = activateLightMode
-
-      const theme = saveToLocal.get('theme')
-    
-          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
-          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
-
-          if (theme === undefined) {
-            if (mediaQueryLight.matches) activateLightMode()
-            else if (mediaQueryDark.matches) activateDarkMode()
-            else {
-              const hour = new Date().getHours()
-              const isNight = hour <= 6 || hour >= 18
-              isNight ? activateDarkMode() : activateLightMode()
-            }
-            mediaQueryDark.addEventListener('change', () => {
-              if (saveToLocal.get('theme') === undefined) {
-                e.matches ? activateDarkMode() : activateLightMode()
-              }
-            })
-          } else {
-            theme === 'light' ? activateLightMode() : activateDarkMode()
-          }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .steps {
+            text-align: left;
+            margin: 30px 0;
+        }
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>John Life - 博客测试页面</h1>
         
-      
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
-      }
-    
-      
-    const detectApple = () => {
-      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-  
-    })()
-  </script><script>const GLOBAL_CONFIG = {
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  translate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
-  copy: {
-    success: '复制成功',
-    error: '复制失败',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  dateSuffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'null',
-  Snackbar: undefined,
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
-    buttonText: '加载更多'
-  },
-  isPhotoFigcaption: false,
-  islazyloadPlugin: false,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
-  autoDarkmode: true
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'John Life',
-  isHighlightShrink: false,
-  isToc: false,
-  pageType: 'home'
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="bg-animation" id="web_bg" style="background: [object Object];"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/search/"><i class="fa-fw fas fa-search"></i><span> 搜索</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">John Life</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/search/"><i class="fa-fw fas fa-search"></i><span> 搜索</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">John Life</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/johnlinlife" target="_blank" title="fab fa-github"><i class="GitHub"></i></a><a class="social-icon" href="mailto:1186703947@qq.com" target="_blank" title="fas fa-envelope"><i class="Email"></i></a><a class="social-icon" href="/1186703947" target="_blank" title="fab fa-qq"><i class="QQ"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/06/30/loveletter/" title="letter">letter</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-06-30T15:37:49.000Z" title="发表于 2025-06-30 23:37:49">2025-06-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%A5%87%E6%80%9D/">-奇思</a></span></div><div class="content">亲爱的时钟：  你好，见字如面。  你曾经问过我成为大人的烦恼是什么  我问喧嚣的城市，它无法告诉我答案  霓虹的夜景，在我的眼里就像王家卫的镜头  我忘记了我给你的答案，因为我也只是一个孩子  而你长大了  路还很长，只是成长的过程中注定绘失去什么  那转瞬即逝的烟火，仲夏夜的蝉鸣  我们无法预知旅途的终点  那就深呼吸感受路边的花香吧   </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/12/16/STM32-%E5%86%85%E9%83%A8Flash%E8%AF%BB%E5%86%99/" title="STM32-内部Flash读写">STM32-内部Flash读写</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-12-16T12:02:07.000Z" title="发表于 2024-12-16 20:02:07">2024-12-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/STM32/">STM32</a></span></div><div class="content">STM32的内部Flash操作我们在设计单片机程序的时候，部分的需求是需要有掉电不丢失的功能。我们可能会使用EEPROM这种存储设备来进行数据的存储保证数据掉电不丢失。而在实际的应用场景中，我们并没有太多的数据量需要进行存储，可能只是一些程序上的参数需要保存。这个使用使用EEPROM就显得有点大材小用，从产品的角度思考这个模块也会给整个项目增加较大的成本。 此时使用单片机内部自带的flash来进行部分数据的掉电不丢失就非常极具性价比(虽然内部flash的读写寿命要少于EEPROM) 1 内部储存空间stm32的flash地址起始于0x0800 0000，结束地址是0x0800 0000加上芯片实际的flash大小，不同的芯片flash大小不同。 RAM起始地址是0x2000 0000，结束地址是0x2000 0000加上芯片的RAM大小。不同的芯片RAM也不同。 stm32的外设地址从0x4000 0000开始，可以看到在库文件中，是通过基于0x4000 0000地址的偏移量来操作寄存器以及外设的。 一般情况下，程序文件是从 0x0800 0000 地址写入，这个是STM32开始...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/10/21/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%EF%BC%88%E5%8D%95%E7%89%87%E6%9C%BA%E6%96%B9%E5%90%91%EF%BC%89%E9%9D%A2%E8%AF%95%E7%BB%8F/" title="嵌入式软件（单片机方向）面试经">嵌入式软件（单片机方向）面试经</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-10-21T10:25:31.000Z" title="发表于 2024-10-21 18:25:31">2024-10-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/STM32/">STM32</a></span></div><div class="content">嵌入式软件（单片机方向）面试经常见八股文volatile关键字volatile的意思是”易变的”，这个关键字主要是防止编译器对变量进行优化。即告诉编译器每次存取该变量的时候都要从内存去存取而不是使用它之前在寄存器中的备份. 应用场景： （1）并行设备的硬件寄存器。存储器映射的硬件寄存器通常加volatile，因为寄存器随时可以被外设硬件修改。当声明指向设备寄存器的指针时一定要用volatile，它会告诉编译器不要对存储在这个地址的数据进行假设。 （2） 一个中断服务程序中修改的供其他程序检测的变量。volatile提醒编译器，它后面所定义的变量随时都有可能改变。因此编译后的程序每次需要存储或读取这个变量的时候，都会直接从变量地址中读取数据。如果没有volatile关键字，则编译器可能优化读取和存储，可能暂时使用寄存器中的值，如果这个变量由别的程序更新了的话，将出现不一致的现象。 （3）多线程应用中被几个任务共享的变量。 堆与栈有什么区别？（a）申请方式栈的空间由操作系统自动分配&#x2F;释放，堆上的空间手动分配&#x2F;释放。 （b）申请大小的限制栈空间有限。在Wind  o...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/10/20/RF125%E4%BD%8E%E9%A2%91%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9D%97/" title="RF125低频通信模块">RF125低频通信模块</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-10-20T08:36:26.000Z" title="发表于 2024-10-20 16:36:26">2024-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%85%B6%E4%BB%96%E5%BC%80%E5%8F%91/">其他开发</a></span></div><div class="content">RF125低频通信模块-125kHz低频远程通信模块模块介绍RF125-TX 模块,配合 RF125-RX 模块，125KHz 的无线空中唤醒和数据收发，可以应用于 PKE 无钥匙门禁，校园门禁等。 RF125-TX,可以通过串口修改发射机 ID、发射数据内容、发射时间间隔。 RF125-RX，接收机低功耗、无线唤醒，可以空中唤醒自己的同时唤醒连接的设备，接收机串口输出收到的无线数据。可以工作在配对模式或者广播模式。通讯距离 5-8 米，远超同类型产品。 RF125-RA 是全功能的无线唤醒模块，集成了 RF125-RX,125KHz 天线，配对按钮，纽扣电池片。接上电池就可以使用。 接口编写1.发射机配置模式可以通过串口修改发射机的参数，内容包括：设置发射数据内容、修改发射机 ID、设置发射时间间隔、读取发射机 ID。串口的格式为 9600，8,N,1,数据内容为（HEX）十六进制, 以0x0D 0x0A 为结束标志。连续两条设置命令的最小间隔为100ms。 (0)串口通信接口移植1234void RF125_TX_Init(void)&#123;	uart1_init();&...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/10/11/LVGL-1-3-%E6%98%BE%E7%A4%BA%E4%BE%8B%E7%A8%8B%E8%A7%A3%E6%9E%90/" title="lvgl开发-2.显示例程解析">lvgl开发-2.显示例程解析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-10-11T07:56:14.000Z" title="发表于 2024-10-11 15:56:14">2024-10-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/STM32/">STM32</a></span></div><div class="content">LVGL开发-2.显示例程的解析该博客通过对例程代码进行解析，从而学习LVGL 例程代码的运行该例程为LVGL库自带例程，函数名字为：lv_example_libpng_1(); 导入的步骤省略。运行代码如下： 123456789101112int main(void)&#123;	lv_init();	lv_port_disp_init();  // lvgl显示接口初始化,放在lv_init()的后面	lv_example_libpng_1();	while(1)	&#123;		lv_task_handler();		delay_us(1);	&#125;&#125; 运行效果为在屏幕中央显示文字。 函数内容该函数的内容如下： 123456void lv_example_libpng_1(void)&#123;    lv_obj_t * label = lv_label_create(lv_screen_active());	lv_label_set_text(label, &quot;Hello world&quot;);    lv_obj_center(label)...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/10/08/LVGL-1-2-DisplayDemo/" title="lvgl开发-2.显示设备的移植">lvgl开发-2.显示设备的移植</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-10-08T13:15:10.000Z" title="发表于 2024-10-08 21:15:10">2024-10-08</time></span></div><div class="content">lvgl开发-2.显示设备的移植对接初始化API我们需要把LCD的文件对接到LVGL的函数里面去。 首先是lv_port_disp——template.c文件 123456/*Initialize your display and the required peripherals.*/static void disp_init(void)&#123;	LCD_Init();    /*You code here*/&#125; 这一部分是显示设备的初始化。我们把LCD的初始化包进去。 屏幕大小部分我们在lv_conf.h文件配置过就不需要修改了。由于宏定义这一部分不会被编译。 修改刷新API12345678910111213141516/*Flush the content of the internal buffer the specific area on the display. *`px_map` contains the rendered image as raw pixel map and it should be copied to `area` on the di...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/10/08/rtos-Resourece-Management/" title="FreeRTOS笔记-资源管理">FreeRTOS笔记-资源管理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-10-08T06:55:13.000Z" title="发表于 2024-10-08 14:55:13">2024-10-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/STM32/">STM32</a></span></div><div class="content">RTOS资源管理(Resource Management)临界资源的定义在RTOS中，临界资源代表的是一次只能由一个任务来占用的资源。在前面的学习中，我们采用了互斥锁来使临界资源仅由单个任务来使用。 要独占式地访问临界资源，有2种方法：  公平竞争：比如使用互斥量，谁先获得互斥量谁就访问临界资源，这部分内容前面讲过。 谁要跟我抢，我就灭掉谁： 中断要跟我抢？我屏蔽中断     其他任务要跟我抢？我禁止调度器，不运行任务切换  暂停调度器暂停调度以后，任务之间不再进行调度。但是中断任然会触发。 暂停和恢复调度的API函数如下: 12345/*暂停调度器*/void vTaskSuspendAll( void );/*恢复调度器*/BaseType_t xTaskResumeAll( void ); 其内部原理是将一个全局变量进行++，然后调度会判断这个变量是不是0，0的话才能进行调度。 在任务中屏蔽中断中断的屏蔽是屏蔽部分优先级比较低的中断，毕竟有一些中断是底层的不能去动他。 中断的优先级中，最高的是复位中断、NMI中断和硬件错误中断三个。这三个是不可以屏蔽的中断。它们的优先级分别...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/09/28/LVGL-1-1-MyFistLvglProject/" title="lvgl开发-1.我的第一个lvgl程序">lvgl开发-1.我的第一个lvgl程序</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-09-28T10:18:09.000Z" title="发表于 2024-09-28 18:18:09">2024-09-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/STM32/">STM32</a></span></div><div class="content">LVGL开发-1.移植LVGL本次移植文件基于RTOS项目，采用芯片为STM32F103RCT6，可能会内存不足。 移植过程移植第一步：下载文件在lvgl的github仓库里进行下载，下载链接 使用git指令对这些文件进行下载。 文件的提取在STM32的项目文件夹中，我们创建一个文件夹专门用来存放lvgl的代码，新建LVGL文件夹。 在下载的lvgl文件中，我们需要提取出我们需要使用的文件。将上图中的四个文件加入到lvgl文件夹中。 代码编译的设置将lvgl&#x2F;lv_conf_template.h 作为 lv_conf.h 复制到 lvgl 文件夹旁边，将其第一个的 #if 0 更改为 1 以使能文件的内容并修改设置 LV_COLOR_DEPTH 宏。 lv_port_display_template.c代表我们的显示接口 lv_port_fs_template.c代表文件系统接口 lv_port_indev_template.c代表输入设备接口 在项目界面的Manage Project Items中，导入文件。 添加lvgl源文件 将lvgl&#x2F;src目录下的c...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/09/28/RTOS-to-RCT6/" title="RTOS的移植的坑-STM32F103RCT6">RTOS的移植的坑-STM32F103RCT6</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-09-28T09:28:55.000Z" title="发表于 2024-09-28 17:28:55">2024-09-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/STM32/">STM32</a></span></div><div class="content">个人RTOS的移植的坑-STM32F103RCT6篇本篇中简单描述RTOS移植的过程，重点在于记录移植过程中出现的调度失败问题。 移植之前的准备在移植之前，我准备了基于STM32F103RCT6的标准库项目以及在FreeRTOS官网上下载的项目包。 标准库项目为RCT6的1.44寸LCD的例程项目。 之前跟着韦东山老师进行项目的移植，他的方法为对demo项目进行直接裁剪。这种方法比较简单，但是对我们理解RTOS运行所需文件可能比较困难。于是决定在现有项目上直接移植RTOS所需的文件。 第一步：移植RTOS所需要的文件在下载完解压后得到\FreeRTOSv202212.01文件。 我们需要的文件如下：  目录\FreeRTOS\Source\：  croutine.c 、 event_groups.c 、 list.c、 queue.c、 stream_buffer.c、 tasks.c、 timers.c    目录\FreeRTOS\Source\include\：其中包含的头文件均可以移植   目录\FreeRTOSv202212.01\FreeRTOS\Source\por...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/09/25/CVTE-lost/" title="CVTE一面记录">CVTE一面记录</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-09-25T07:37:31.000Z" title="发表于 2024-09-25 15:37:31">2024-09-25</time></span></div><div class="content">CVTE一面总结一面总结面试官准备的问题比较出乎我的预料，有一些知识点没有提前去准备导致答不出来。 失败是人生的必经之路。 题目 RTOS和裸机开发的区别 我的回答是裸机由于32单核运行，一次性只能运行一个程序，而RTOS可以通过任务轮转运行的方式实现多任务同时进行    FreeRTOS的任务状态（4种）1.运行态(Running) 2.就绪态(Ready) 3.阻塞态(Blocked) 4.挂起态(Suspended) Running—运行态当任务处于实际运行状态被称之为运行态，即 CPU 的使用权被这个任务占用。 Ready—就绪态处于就绪态的任务是指那些能够运行（没有被阻塞和挂起），但是当前没有运行的任务，因为同优先级或更高优先级的任务正在运行。 Blocked—阻塞态由于等待信号量，消息队列，事件标志组等而处于的状态被称之为阻塞态，另外任务调用延迟函数也会处于阻塞态。 Suspended—挂起态类似阻塞态，通过调用函数 vTaskSuspend()对指定任务进行挂起，挂起后这个任务将不被执行，只有调用函数 xTaskResume()才可以将这个任务从挂起态恢复。  RT...</div></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><a class="page-number" href="/page/3/#content-inner">3</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johan</div><div class="author-info-description">嵌入式开发者 | 技术爱好者</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" href="mailto:1186703947@qq.com"><i class="fas fa-envelope"></i><span>联系我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/johnlinlife" target="_blank" title="fab fa-github"><i class="GitHub"></i></a><a class="social-icon" href="mailto:1186703947@qq.com" target="_blank" title="fas fa-envelope"><i class="Email"></i></a><a class="social-icon" href="/1186703947" target="_blank" title="fab fa-qq"><i class="QQ"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的技术博客！分享嵌入式开发经验和技术学习笔记。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/30/loveletter/" title="letter">letter</a><time datetime="2025-06-30T15:37:49.000Z" title="发表于 2025-06-30 23:37:49">2025-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/16/STM32-%E5%86%85%E9%83%A8Flash%E8%AF%BB%E5%86%99/" title="STM32-内部Flash读写">STM32-内部Flash读写</a><time datetime="2024-12-16T12:02:07.000Z" title="发表于 2024-12-16 20:02:07">2024-12-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/21/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%EF%BC%88%E5%8D%95%E7%89%87%E6%9C%BA%E6%96%B9%E5%90%91%EF%BC%89%E9%9D%A2%E8%AF%95%E7%BB%8F/" title="嵌入式软件（单片机方向）面试经">嵌入式软件（单片机方向）面试经</a><time datetime="2024-10-21T10:25:31.000Z" title="发表于 2024-10-21 18:25:31">2024-10-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/20/RF125%E4%BD%8E%E9%A2%91%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9D%97/" title="RF125低频通信模块">RF125低频通信模块</a><time datetime="2024-10-20T08:36:26.000Z" title="发表于 2024-10-20 16:36:26">2024-10-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/11/LVGL-1-3-%E6%98%BE%E7%A4%BA%E4%BE%8B%E7%A8%8B%E8%A7%A3%E6%9E%90/" title="lvgl开发-2.显示例程解析">lvgl开发-2.显示例程解析</a><time datetime="2024-10-11T07:56:14.000Z" title="发表于 2024-10-11 15:56:14">2024-10-11</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
-            <i class="fas fa-folder-open"></i>
-            <span>分类</span>
-            
-          </div>
-          <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%A5%87%E6%80%9D/"><span class="card-category-list-name">-奇思</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/"><span class="card-category-list-name">Linux</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/STM32/"><span class="card-category-list-name">STM32</span><span class="card-category-list-count">13</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%85%B6%E4%BB%96%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">其他开发</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%A5%87%E6%80%9D/"><span class="card-category-list-name">奇思</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"><span class="card-category-list-name">工具分享</span><span class="card-category-list-count">2</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/%E8%87%AA%E5%8A%A8%E5%8C%96/"><span class="card-category-list-name">自动化</span><span class="card-category-list-count">2</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="card-category-list-name">效率提升</span><span class="card-category-list-count">1</span></a></li></ul></li></ul></li>
-          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/OpenClaw/" style="font-size: 1.3em; color: #99a1ac">OpenClaw</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 1.1em; color: #999">工作流</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 1.1em; color: #999">部署</a> <a href="/tags/RTOS/" style="font-size: 1.5em; color: #99a9bf">RTOS</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">效率工具</a> <a href="/tags/Linux/" style="font-size: 1.1em; color: #999">Linux</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 1.3em; color: #99a1ac">自动化</a> <a href="/tags/AI%E5%8A%A9%E6%89%8B/" style="font-size: 1.3em; color: #99a1ac">AI助手</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 1.1em; color: #999">配置</a></div></div><div class="card-widget card-archives">
-    <div class="item-headline">
-      <i class="fas fa-archive"></i>
-      <span>归档</span>
-      
+        <div class="status success">
+            <h2>✅ 测试页面访问正常</h2>
+            <p>GitHub Pages 静态文件服务正常</p>
+        </div>
+        
+        <div class="status info">
+            <h2>📝 博客状态</h2>
+            <p>博客正在升级中...</p>
+            <p>当前时间: <span id="current-time"></span></p>
+        </div>
+        
+        <div class="steps">
+            <h3>GitHub Pages 设置步骤：</h3>
+            <div class="step">
+                <strong>1. 访问仓库设置</strong>
+                <p>打开 https://github.com/JohnLinLife/JohnLinLife.github.io/settings/pages</p>
+            </div>
+            <div class="step">
+                <strong>2. 配置部署分支</strong>
+                <p>选择部署分支：<code>master</code> 分支的 <code>/public</code> 文件夹</p>
+            </div>
+            <div class="step">
+                <strong>3. 保存设置</strong>
+                <p>点击保存，等待GitHub Pages构建完成</p>
+            </div>
+            <div class="step">
+                <strong>4. 检查部署状态</strong>
+                <p>查看Actions标签页中的部署状态</p>
+            </div>
+        </div>
+        
+        <div class="status warning">
+            <h2>⚠️ 注意事项</h2>
+            <p>如果使用Hexo自动部署，请确保：</p>
+            <ul>
+                <li>部署分支设置为 <code>master</code></li>
+                <li>Hexo配置中的部署分支与GitHub Pages设置一致</li>
+                <li>GitHub Actions工作流配置正确</li>
+            </ul>
+        </div>
+        
+        <p>博客地址：<a href="https://johnlinlife.github.io">https://johnlinlife.github.io</a></p>
     </div>
-  
-    <ul class="card-archive-list">
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2025/06/">
-            <span class="card-archive-list-date">
-              六月 2025
-            </span>
-            <span class="card-archive-list-count">1</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2024/12/">
-            <span class="card-archive-list-date">
-              十二月 2024
-            </span>
-            <span class="card-archive-list-count">1</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2024/10/">
-            <span class="card-archive-list-date">
-              十月 2024
-            </span>
-            <span class="card-archive-list-count">5</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2024/09/">
-            <span class="card-archive-list-date">
-              九月 2024
-            </span>
-            <span class="card-archive-list-count">11</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2024/06/">
-            <span class="card-archive-list-date">
-              六月 2024
-            </span>
-            <span class="card-archive-list-count">3</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2024/03/">
-            <span class="card-archive-list-date">
-              三月 2024
-            </span>
-            <span class="card-archive-list-count">2</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2023/09/">
-            <span class="card-archive-list-date">
-              九月 2023
-            </span>
-            <span class="card-archive-list-count">1</span>
-          </a>
-        </li>
-      
-    </ul>
-  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">24</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-03-07T18:30:29.609Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2024 - 2026 By Johan</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+    
+    <script>
+        // 显示当前时间
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('zh-CN', {
+                timeZone: 'Asia/Shanghai',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

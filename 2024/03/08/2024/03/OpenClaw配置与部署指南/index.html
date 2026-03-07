@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OpenClaw配置与部署完全指南 | John Life</title><meta name="author" content="Johan"><meta name="copyright" content="Johan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文详细介绍OpenClaw的安装、配置、部署和最佳实践，帮助你搭建自己的AI助手平台。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenClaw配置与部署完全指南">
+<meta property="og:url" content="https://johnlinlife.github.io/2024/03/08/2024/03/OpenClaw%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="John Life">
+<meta property="og:description" content="本文详细介绍OpenClaw的安装、配置、部署和最佳实践，帮助你搭建自己的AI助手平台。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://johnlinlife.github.io/img/posts/openclaw-config.jpg">
+<meta property="article:published_time" content="2024-03-07T18:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-07T18:00:00.000Z">
+<meta property="article:author" content="Johan">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="自动化">
+<meta property="article:tag" content="AI助手">
+<meta property="article:tag" content="配置">
+<meta property="article:tag" content="部署">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://johnlinlife.github.io/img/posts/openclaw-config.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenClaw配置与部署完全指南",
+  "url": "https://johnlinlife.github.io/2024/03/08/2024/03/OpenClaw%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/",
+  "image": "https://johnlinlife.github.io/img/posts/openclaw-config.jpg",
+  "datePublished": "2024-03-07T18:00:00.000Z",
+  "dateModified": "2024-03-07T18:00:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Johan",
+      "url": "https://johnlinlife.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://johnlinlife.github.io/2024/03/08/2024/03/OpenClaw%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenClaw配置与部署完全指南',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="bg-animation" id="web_bg" style="background: [object Object];"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/search/"><i class="fa-fw fas fa-search"></i><span> 搜索</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/posts/openclaw-config.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">John Life</span></a><a class="nav-page-title" href="/"><span class="site-name">OpenClaw配置与部署完全指南</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/search/"><i class="fa-fw fas fa-search"></i><span> 搜索</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">OpenClaw配置与部署完全指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-07T18:00:00.000Z" title="发表于 2024-03-08 02:00:00">2024-03-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-07T18:00:00.000Z" title="更新于 2024-03-08 02:00:00">2024-03-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/">工具分享</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="什么是OpenClaw？"><a href="#什么是OpenClaw？" class="headerlink" title="什么是OpenClaw？"></a>什么是OpenClaw？</h2><p>OpenClaw是一个开源的AI助手平台，允许你创建和管理自己的AI助手，支持多种通信渠道（如WebChat、Feishu、Telegram等），并提供丰富的工具和技能扩展。</p>
+<h2 id="核心特性"><a href="#核心特性" class="headerlink" title="核心特性"></a>核心特性</h2><ul>
+<li><strong>多平台支持</strong>：WebChat、Feishu、Telegram、WhatsApp等</li>
+<li><strong>技能扩展</strong>：通过SKILL.md文件扩展功能</li>
+<li><strong>文件管理</strong>：完整的文件读写和编辑能力</li>
+<li><strong>自动化工具</strong>：浏览器控制、系统命令执行等</li>
+<li><strong>记忆系统</strong>：MEMORY.md和每日记忆文件</li>
+<li><strong>子代理系统</strong>：可以创建和管理多个子代理</li>
+</ul>
+<h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><h3 id="1-安装OpenClaw"><a href="#1-安装OpenClaw" class="headerlink" title="1. 安装OpenClaw"></a>1. 安装OpenClaw</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用npm全局安装</span></span><br><span class="line">npm install -g openclaw</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者使用yarn</span></span><br><span class="line">yarn global add openclaw</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-初始化配置"><a href="#2-初始化配置" class="headerlink" title="2. 初始化配置"></a>2. 初始化配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化配置</span></span><br><span class="line">openclaw init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查状态</span></span><br><span class="line">openclaw status</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-配置文件结构"><a href="#3-配置文件结构" class="headerlink" title="3. 配置文件结构"></a>3. 配置文件结构</h3><p>OpenClaw的主要配置文件位于 <code>~/.openclaw/config.json</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;models&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;default&quot;</span><span class="punctuation">:</span> <span class="string">&quot;custom-api-deepseek-com/deepseek-chat&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;providers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;custom-api-deepseek-com&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;apiKey&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;baseURL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://api.deepseek.com&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;gateway&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">3000</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;feishu&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;dmPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;allowlist&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;allowlist&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;ou_xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="工作空间管理"><a href="#工作空间管理" class="headerlink" title="工作空间管理"></a>工作空间管理</h2><h3 id="工作空间结构"><a href="#工作空间结构" class="headerlink" title="工作空间结构"></a>工作空间结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">D:\.openclaw\workspace\</span><br><span class="line">├── AGENTS.md          # 代理说明文档</span><br><span class="line">├── SOUL.md           # 代理个性定义</span><br><span class="line">├── USER.md           # 用户信息</span><br><span class="line">├── TOOLS.md          # 工具配置</span><br><span class="line">├── IDENTITY.md       # 身份定义</span><br><span class="line">├── MEMORY.md         # 长期记忆</span><br><span class="line">├── HEARTBEAT.md      # 心跳任务</span><br><span class="line">├── memory/           # 每日记忆文件</span><br><span class="line">│   ├── 2024-03-07.md</span><br><span class="line">│   └── 2024-03-08.md</span><br><span class="line">└── skills/           # 技能目录</span><br></pre></td></tr></table></figure>
+
+<h3 id="关键文件说明"><a href="#关键文件说明" class="headerlink" title="关键文件说明"></a>关键文件说明</h3><h4 id="AGENTS-md"><a href="#AGENTS-md" class="headerlink" title="AGENTS.md"></a>AGENTS.md</h4><p>代理的行为指南，包含：</p>
+<ul>
+<li>会话启动流程</li>
+<li>记忆管理规则</li>
+<li>安全边界</li>
+<li>群聊参与规则</li>
+</ul>
+<h4 id="SOUL-md"><a href="#SOUL-md" class="headerlink" title="SOUL.md"></a>SOUL.md</h4><p>定义代理的个性、语气和行为方式。</p>
+<h4 id="MEMORY-md"><a href="#MEMORY-md" class="headerlink" title="MEMORY.md"></a>MEMORY.md</h4><p>长期记忆存储，记录重要事件、决策和用户偏好。</p>
+<h4 id="HEARTBEAT-md"><a href="#HEARTBEAT-md" class="headerlink" title="HEARTBEAT.md"></a>HEARTBEAT.md</h4><p>定期检查任务列表，如：</p>
+<ul>
+<li>检查邮件</li>
+<li>查看日历</li>
+<li>检查天气</li>
+<li>项目状态检查</li>
+</ul>
+<h2 id="Feishu集成配置"><a href="#Feishu集成配置" class="headerlink" title="Feishu集成配置"></a>Feishu集成配置</h2><h3 id="1-创建Feishu应用"><a href="#1-创建Feishu应用" class="headerlink" title="1. 创建Feishu应用"></a>1. 创建Feishu应用</h3><ol>
+<li>访问 <a target="_blank" rel="noopener" href="https://open.feishu.cn/">Feishu开放平台</a></li>
+<li>创建企业自建应用</li>
+<li>获取 <code>App ID</code> 和 <code>App Secret</code></li>
+</ol>
+<h3 id="2-配置Feishu插件"><a href="#2-配置Feishu插件" class="headerlink" title="2. 配置Feishu插件"></a>2. 配置Feishu插件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置Feishu配置</span></span><br><span class="line">openclaw config <span class="built_in">set</span> plugins.feishu.appId <span class="string">&quot;cli_xxxxxxxx&quot;</span></span><br><span class="line">openclaw config <span class="built_in">set</span> plugins.feishu.appSecret <span class="string">&quot;xxxxxxxxxxxxxxxx&quot;</span></span><br><span class="line">openclaw config <span class="built_in">set</span> plugins.feishu.verificationToken <span class="string">&quot;xxxxxxxx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置DM策略</span></span><br><span class="line">openclaw config <span class="built_in">set</span> plugins.feishu.dmPolicy <span class="string">&quot;allowlist&quot;</span></span><br><span class="line">openclaw config <span class="built_in">set</span> plugins.feishu.allowlist <span class="string">&quot;[\&quot;ou_xxxxxxxxxxxxxxxxxxxxxxxx\&quot;]&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-常见问题解决"><a href="#3-常见问题解决" class="headerlink" title="3. 常见问题解决"></a>3. 常见问题解决</h3><h4 id="问题：DM被阻止"><a href="#问题：DM被阻止" class="headerlink" title="问题：DM被阻止"></a>问题：DM被阻止</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">错误：blocked unauthorized sender ou_xxxxxxxx (dmPolicy=disabled)</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决方案：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法1：允许所有用户</span></span><br><span class="line">openclaw config <span class="built_in">set</span> plugins.feishu.dmPolicy <span class="string">&quot;all&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法2：添加到允许列表</span></span><br><span class="line">openclaw config <span class="built_in">set</span> plugins.feishu.dmPolicy <span class="string">&quot;allowlist&quot;</span></span><br><span class="line">openclaw config <span class="built_in">set</span> plugins.feishu.allowlist <span class="string">&quot;[\&quot;ou_xxxxxxxxxxxxxxxxxxxxxxxx\&quot;]&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启网关</span></span><br><span class="line">openclaw gateway restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="技能开发"><a href="#技能开发" class="headerlink" title="技能开发"></a>技能开发</h2><h3 id="技能结构"><a href="#技能结构" class="headerlink" title="技能结构"></a>技能结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">skills/</span><br><span class="line">├── skill-name/</span><br><span class="line">│   ├── SKILL.md      # 技能说明文档</span><br><span class="line">│   ├── script.js     # 执行脚本</span><br><span class="line">│   └── assets/       # 资源文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建自定义技能"><a href="#创建自定义技能" class="headerlink" title="创建自定义技能"></a>创建自定义技能</h3><ol>
+<li><p><strong>创建技能目录</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p skills/my-skill</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>编写SKILL.md</strong></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 我的技能</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 描述</span></span><br><span class="line">这个技能用于...</span><br><span class="line"></span><br><span class="line"><span class="section">## 使用方法</span></span><br><span class="line"><span class="bullet">1.</span> 当用户说...</span><br><span class="line"><span class="bullet">2.</span> 执行...</span><br><span class="line"></span><br><span class="line"><span class="section">## 工具</span></span><br><span class="line"><span class="bullet">-</span> read: 读取文件</span><br><span class="line"><span class="bullet">-</span> write: 写入文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>注册技能</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw skill register skills/my-skill</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="记忆系统最佳实践"><a href="#记忆系统最佳实践" class="headerlink" title="记忆系统最佳实践"></a>记忆系统最佳实践</h2><h3 id="1-每日记忆"><a href="#1-每日记忆" class="headerlink" title="1. 每日记忆"></a>1. 每日记忆</h3><ul>
+<li>在 <code>memory/YYYY-MM-DD.md</code> 中记录每日活动</li>
+<li>包含重要对话、决策和任务</li>
+</ul>
+<h3 id="2-长期记忆"><a href="#2-长期记忆" class="headerlink" title="2. 长期记忆"></a>2. 长期记忆</h3><ul>
+<li>定期从每日记忆中提取重要信息到 <code>MEMORY.md</code></li>
+<li>包含用户偏好、项目状态、重要日期</li>
+</ul>
+<h3 id="3-记忆搜索"><a href="#3-记忆搜索" class="headerlink" title="3. 记忆搜索"></a>3. 记忆搜索</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 搜索记忆</span></span><br><span class="line">openclaw memory search <span class="string">&quot;关键词&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="部署策略"><a href="#部署策略" class="headerlink" title="部署策略"></a>部署策略</h2><h3 id="1-本地部署"><a href="#1-本地部署" class="headerlink" title="1. 本地部署"></a>1. 本地部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动网关</span></span><br><span class="line">openclaw gateway start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查状态</span></span><br><span class="line">openclaw gateway status</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-生产环境部署"><a href="#2-生产环境部署" class="headerlink" title="2. 生产环境部署"></a>2. 生产环境部署</h3><h4 id="使用PM2管理"><a href="#使用PM2管理" class="headerlink" title="使用PM2管理"></a>使用PM2管理</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装PM2</span></span><br><span class="line">npm install -g pm2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动OpenClaw</span></span><br><span class="line">pm2 start openclaw -- gateway start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机自启</span></span><br><span class="line">pm2 startup</span><br><span class="line">pm2 save</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用Docker"><a href="#使用Docker" class="headerlink" title="使用Docker"></a>使用Docker</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">18</span>-alpine</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install -g openclaw</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> config.json /root/.openclaw/config.json</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3000</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;openclaw&quot;</span>, <span class="string">&quot;gateway&quot;</span>, <span class="string">&quot;start&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-反向代理配置（Nginx）"><a href="#3-反向代理配置（Nginx）" class="headerlink" title="3. 反向代理配置（Nginx）"></a>3. 反向代理配置（Nginx）</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> openclaw.yourdomain.com;</span><br><span class="line">    </span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:3000;</span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&#x27;upgrade&#x27;</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_cache_bypass</span> <span class="variable">$http_upgrade</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="监控与维护"><a href="#监控与维护" class="headerlink" title="监控与维护"></a>监控与维护</h2><h3 id="1-日志管理"><a href="#1-日志管理" class="headerlink" title="1. 日志管理"></a>1. 日志管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看网关日志</span></span><br><span class="line">openclaw gateway logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看代理日志</span></span><br><span class="line">openclaw agent logs</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-性能监控"><a href="#2-性能监控" class="headerlink" title="2. 性能监控"></a>2. 性能监控</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查系统状态</span></span><br><span class="line">openclaw status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看会话列表</span></span><br><span class="line">openclaw sessions list</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-备份策略"><a href="#3-备份策略" class="headerlink" title="3. 备份策略"></a>3. 备份策略</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份配置文件</span></span><br><span class="line"><span class="built_in">cp</span> -r ~/.openclaw ~/.openclaw.backup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份工作空间</span></span><br><span class="line"><span class="built_in">cp</span> -r D:\.openclaw\workspace D:\.openclaw\workspace.backup</span><br></pre></td></tr></table></figure>
+
+<h2 id="故障排除"><a href="#故障排除" class="headerlink" title="故障排除"></a>故障排除</h2><h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><h4 id="1-网关无法启动"><a href="#1-网关无法启动" class="headerlink" title="1. 网关无法启动"></a>1. 网关无法启动</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查端口占用</span></span><br><span class="line">netstat -ano | findstr :3000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启网关</span></span><br><span class="line">openclaw gateway restart</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-模型API错误"><a href="#2-模型API错误" class="headerlink" title="2. 模型API错误"></a>2. 模型API错误</h4><ul>
+<li>检查API密钥是否正确</li>
+<li>确认模型提供商服务状态</li>
+<li>检查网络连接</li>
+</ul>
+<h4 id="3-文件权限问题"><a href="#3-文件权限问题" class="headerlink" title="3. 文件权限问题"></a>3. 文件权限问题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修复权限</span></span><br><span class="line"><span class="built_in">chmod</span> -R 755 ~/.openclaw</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-记忆文件损坏"><a href="#4-记忆文件损坏" class="headerlink" title="4. 记忆文件损坏"></a>4. 记忆文件损坏</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重建记忆索引</span></span><br><span class="line">openclaw memory rebuild</span><br></pre></td></tr></table></figure>
+
+<h2 id="安全最佳实践"><a href="#安全最佳实践" class="headerlink" title="安全最佳实践"></a>安全最佳实践</h2><ol>
+<li><p><strong>API密钥管理</strong></p>
+<ul>
+<li>使用环境变量存储敏感信息</li>
+<li>定期轮换API密钥</li>
+</ul>
+</li>
+<li><p><strong>访问控制</strong></p>
+<ul>
+<li>限制Feishu DM访问</li>
+<li>使用允许列表而非全部开放</li>
+</ul>
+</li>
+<li><p><strong>文件权限</strong></p>
+<ul>
+<li>限制工作空间访问权限</li>
+<li>定期审计文件更改</li>
+</ul>
+</li>
+<li><p><strong>日志监控</strong></p>
+<ul>
+<li>监控异常活动</li>
+<li>设置警报机制</li>
+</ul>
+</li>
+</ol>
+<h2 id="扩展资源"><a href="#扩展资源" class="headerlink" title="扩展资源"></a>扩展资源</h2><ul>
+<li><strong>官方文档</strong>: <a target="_blank" rel="noopener" href="https://docs.openclaw.ai/">https://docs.openclaw.ai</a></li>
+<li><strong>GitHub仓库</strong>: <a target="_blank" rel="noopener" href="https://github.com/openclaw/openclaw">https://github.com/openclaw/openclaw</a></li>
+<li><strong>社区Discord</strong>: <a target="_blank" rel="noopener" href="https://discord.com/invite/clawd">https://discord.com/invite/clawd</a></li>
+<li><strong>技能市场</strong>: <a target="_blank" rel="noopener" href="https://clawhub.com/">https://clawhub.com</a></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>OpenClaw是一个功能强大的AI助手平台，通过合理的配置和部署，可以成为你的得力助手。本文涵盖了从安装配置到生产部署的完整流程，希望能帮助你更好地使用和管理OpenClaw。</p>
+<hr>
+<p><strong>最后更新</strong>: 2024年3月8日<br><strong>作者</strong>: Johan<br><strong>标签</strong>: #OpenClaw #AI助手 #自动化 #配置指南</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://johnlinlife.github.io">Johan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://johnlinlife.github.io/2024/03/08/2024/03/OpenClaw%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/">https://johnlinlife.github.io/2024/03/08/2024/03/OpenClaw%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://johnlinlife.github.io" target="_blank">John Life</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OpenClaw/">OpenClaw</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><a class="post-meta__tags" href="/tags/AI%E5%8A%A9%E6%89%8B/">AI助手</a><a class="post-meta__tags" href="/tags/%E9%85%8D%E7%BD%AE/">配置</a><a class="post-meta__tags" href="/tags/%E9%83%A8%E7%BD%B2/">部署</a></div><div class="post-share"><div class="social-share" data-image="/img/posts/openclaw-config.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/03/08/2024/03/OpenClaw%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81/" title="OpenClaw实用技巧与自动化工作流"><img class="cover" src="/img/posts/openclaw-workflow.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">OpenClaw实用技巧与自动化工作流</div></div><div class="info-2"><div class="info-item-1">前言在上一篇OpenClaw配置与部署指南中，我们介绍了OpenClaw的基础配置。本文将深入探讨OpenClaw的实用技巧和自动化工作流，帮助你最大化利用这个强大的AI助手。 核心工作流设计1. 日常信息管理早晨简报通过HEARTBEAT.md设置每日早晨自动检查： 12345678# HEARTBEAT.md - 早晨简报## 每日8:00自动执行1. 检查天气预报（当前位置）2. 查看今日日历事件3. 检查未读重要邮件4. 获取新闻摘要5. 提醒今日待办事项  实现代码示例12345678910111213141516171819// 早晨简报脚本const morningBriefing = async () =&gt; &#123;  // 1. 获取天气  const weather = await getWeather(&#x27;上海&#x27;);    // 2. 检查日历  const events = await getCalendarEvents();    // 3. 检查邮件  const emails = await getUnreadEmails...</div></div></div></a><a class="pagination-related" href="/2023/09/23/2023%E5%B9%B4%E5%9B%BD%E8%B5%9BE%E9%A2%98/" title="2023年国赛E题-目标追踪系统"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">2023年国赛E题-目标追踪系统</div></div><div class="info-2"><div class="info-item-1">运动目标控制与自动追踪系统（E题）摘要本文将探讨基于三维舵机云台的自动追踪系统的各个方面。主要介绍系统的构成和原理，包括云台结构、传感器选择与应用以及控制电路与算法概述。本文为赛后复盘。 系统概述基于三维舵机云台的自动追踪系统是一种集成了摄像头、控制算法和机械结构的自动化系统，旨在实现对特定目标物体在三维空间内的自动追踪和定位。该系统通过实时采集传感器数据，使用单片机装载运动学算法计算目标的位置和角度，然后通过舵机控制实现云台的运动，使得装载了摄像头和激光笔的云台能够持续地朝向目标物体，将激光点持续地照射到目标上。系统的核心构成包括三维舵机云台、传感器模块、单片机控制电路与算法。三维舵机云台负责承载传感器和实现运动，具有精确的角度控制能力。传感器模选择的是单目摄像头，用于获取目标的位置和角度等信息。控制电路与算法则负责处理传感器数据，通过运动学算法和控制策略，计算出云台的控制指令，实现自动追踪。 云台组成云台的设计要考虑机械结构的稳定性和运动的精确性。三维云台一般由两个舵机组成，其结构可视为两个关节组成的机器人。而机器人关节伺服系统的动态误差 ，是影响其末端执行器运动轨迹精度的一...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/03/08/2024/03/OpenClaw%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81/" title="OpenClaw实用技巧与自动化工作流"><img class="cover" src="/img/posts/openclaw-workflow.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-08</div><div class="info-item-2">OpenClaw实用技巧与自动化工作流</div></div><div class="info-2"><div class="info-item-1">前言在上一篇OpenClaw配置与部署指南中，我们介绍了OpenClaw的基础配置。本文将深入探讨OpenClaw的实用技巧和自动化工作流，帮助你最大化利用这个强大的AI助手。 核心工作流设计1. 日常信息管理早晨简报通过HEARTBEAT.md设置每日早晨自动检查： 12345678# HEARTBEAT.md - 早晨简报## 每日8:00自动执行1. 检查天气预报（当前位置）2. 查看今日日历事件3. 检查未读重要邮件4. 获取新闻摘要5. 提醒今日待办事项  实现代码示例12345678910111213141516171819// 早晨简报脚本const morningBriefing = async () =&gt; &#123;  // 1. 获取天气  const weather = await getWeather(&#x27;上海&#x27;);    // 2. 检查日历  const events = await getCalendarEvents();    // 3. 检查邮件  const emails = await getUnreadEmails...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johan</div><div class="author-info-description">嵌入式开发者 | 技术爱好者</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" href="mailto:1186703947@qq.com"><i class="fas fa-envelope"></i><span>联系我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/johnlinlife" target="_blank" title="fab fa-github"><i class="GitHub"></i></a><a class="social-icon" href="mailto:1186703947@qq.com" target="_blank" title="fas fa-envelope"><i class="Email"></i></a><a class="social-icon" href="/1186703947" target="_blank" title="fab fa-qq"><i class="QQ"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的技术博客！分享嵌入式开发经验和技术学习笔记。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFOpenClaw%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是OpenClaw？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">核心特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">安装与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85OpenClaw"><span class="toc-number">3.1.</span> <span class="toc-text">1. 安装OpenClaw</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="toc-number">3.2.</span> <span class="toc-text">2. 初始化配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-number">3.3.</span> <span class="toc-text">3. 配置文件结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">工作空间管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84"><span class="toc-number">4.1.</span> <span class="toc-text">工作空间结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">4.2.</span> <span class="toc-text">关键文件说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AGENTS-md"><span class="toc-number">4.2.1.</span> <span class="toc-text">AGENTS.md</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SOUL-md"><span class="toc-number">4.2.2.</span> <span class="toc-text">SOUL.md</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MEMORY-md"><span class="toc-number">4.2.3.</span> <span class="toc-text">MEMORY.md</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HEARTBEAT-md"><span class="toc-number">4.2.4.</span> <span class="toc-text">HEARTBEAT.md</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feishu%E9%9B%86%E6%88%90%E9%85%8D%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">Feishu集成配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BAFeishu%E5%BA%94%E7%94%A8"><span class="toc-number">5.1.</span> <span class="toc-text">1. 创建Feishu应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AEFeishu%E6%8F%92%E4%BB%B6"><span class="toc-number">5.2.</span> <span class="toc-text">2. 配置Feishu插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">5.3.</span> <span class="toc-text">3. 常见问题解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9ADM%E8%A2%AB%E9%98%BB%E6%AD%A2"><span class="toc-number">5.3.1.</span> <span class="toc-text">问题：DM被阻止</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E8%83%BD%E5%BC%80%E5%8F%91"><span class="toc-number">6.</span> <span class="toc-text">技能开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E8%83%BD%E7%BB%93%E6%9E%84"><span class="toc-number">6.1.</span> <span class="toc-text">技能结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8A%80%E8%83%BD"><span class="toc-number">6.2.</span> <span class="toc-text">创建自定义技能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">7.</span> <span class="toc-text">记忆系统最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%AF%8F%E6%97%A5%E8%AE%B0%E5%BF%86"><span class="toc-number">7.1.</span> <span class="toc-text">1. 每日记忆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%95%BF%E6%9C%9F%E8%AE%B0%E5%BF%86"><span class="toc-number">7.2.</span> <span class="toc-text">2. 长期记忆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%B0%E5%BF%86%E6%90%9C%E7%B4%A2"><span class="toc-number">7.3.</span> <span class="toc-text">3. 记忆搜索</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E7%AD%96%E7%95%A5"><span class="toc-number">8.</span> <span class="toc-text">部署策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2"><span class="toc-number">8.1.</span> <span class="toc-text">1. 本地部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2"><span class="toc-number">8.2.</span> <span class="toc-text">2. 生产环境部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8PM2%E7%AE%A1%E7%90%86"><span class="toc-number">8.2.1.</span> <span class="toc-text">使用PM2管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Docker"><span class="toc-number">8.2.2.</span> <span class="toc-text">使用Docker</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%EF%BC%88Nginx%EF%BC%89"><span class="toc-number">8.3.</span> <span class="toc-text">3. 反向代理配置（Nginx）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%91%E6%8E%A7%E4%B8%8E%E7%BB%B4%E6%8A%A4"><span class="toc-number">9.</span> <span class="toc-text">监控与维护</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86"><span class="toc-number">9.1.</span> <span class="toc-text">1. 日志管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7"><span class="toc-number">9.2.</span> <span class="toc-text">2. 性能监控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%A4%87%E4%BB%BD%E7%AD%96%E7%95%A5"><span class="toc-number">9.3.</span> <span class="toc-text">3. 备份策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4"><span class="toc-number">10.</span> <span class="toc-text">故障排除</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.1.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%BD%91%E5%85%B3%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8"><span class="toc-number">10.1.1.</span> <span class="toc-text">1. 网关无法启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%A8%A1%E5%9E%8BAPI%E9%94%99%E8%AF%AF"><span class="toc-number">10.1.2.</span> <span class="toc-text">2. 模型API错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98"><span class="toc-number">10.1.3.</span> <span class="toc-text">3. 文件权限问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E8%AE%B0%E5%BF%86%E6%96%87%E4%BB%B6%E6%8D%9F%E5%9D%8F"><span class="toc-number">10.1.4.</span> <span class="toc-text">4. 记忆文件损坏</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">11.</span> <span class="toc-text">安全最佳实践</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E8%B5%84%E6%BA%90"><span class="toc-number">12.</span> <span class="toc-text">扩展资源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">13.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/30/loveletter/" title="letter">letter</a><time datetime="2025-06-30T15:37:49.000Z" title="发表于 2025-06-30 23:37:49">2025-06-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/16/STM32-%E5%86%85%E9%83%A8Flash%E8%AF%BB%E5%86%99/" title="STM32-内部Flash读写">STM32-内部Flash读写</a><time datetime="2024-12-16T12:02:07.000Z" title="发表于 2024-12-16 20:02:07">2024-12-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/21/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%EF%BC%88%E5%8D%95%E7%89%87%E6%9C%BA%E6%96%B9%E5%90%91%EF%BC%89%E9%9D%A2%E8%AF%95%E7%BB%8F/" title="嵌入式软件（单片机方向）面试经">嵌入式软件（单片机方向）面试经</a><time datetime="2024-10-21T10:25:31.000Z" title="发表于 2024-10-21 18:25:31">2024-10-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/20/RF125%E4%BD%8E%E9%A2%91%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9D%97/" title="RF125低频通信模块">RF125低频通信模块</a><time datetime="2024-10-20T08:36:26.000Z" title="发表于 2024-10-20 16:36:26">2024-10-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/11/LVGL-1-3-%E6%98%BE%E7%A4%BA%E4%BE%8B%E7%A8%8B%E8%A7%A3%E6%9E%90/" title="lvgl开发-2.显示例程解析">lvgl开发-2.显示例程解析</a><time datetime="2024-10-11T07:56:14.000Z" title="发表于 2024-10-11 15:56:14">2024-10-11</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2024 - 2026 By Johan</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

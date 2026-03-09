@@ -3,16 +3,102 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>博客管理后台</title>
+  <title>Hexo博客管理</title>
+  
+  <!-- Netlify CMS -->
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    .nc-root {
+      height: 100vh !important;
+    }
+    
+    .nc-app {
+      height: 100% !important;
+    }
+    
+    .nc-entryEditor-container {
+      height: calc(100vh - 60px) !important;
+    }
+  </style>
+  
   <script>
-    // 立即重定向到认证页面
-    window.location.replace('/admin/simple-auth.html');
+    // 监听来自父窗口的token
+    window.addEventListener('message', function(event) {
+      if (event.data && event.data.type === 'github_token') {
+        const token = event.data.token;
+        
+        // 自定义GitHub认证
+        const CMS = window.CMS;
+        if (CMS && CMS.getBackend) {
+          const backend = CMS.getBackend('github');
+          if (backend && backend.authenticate) {
+            const originalAuthenticate = backend.authenticate;
+            backend.authenticate = function() {
+              return Promise.resolve({
+                token: token,
+                provider: 'github'
+              });
+            };
+            
+            // 重新初始化CMS
+            setTimeout(function() {
+              CMS.init();
+            }, 100);
+          }
+        }
+      }
+    });
+    
+    // 发送退出消息
+    function sendLogout() {
+      if (window.parent) {
+        window.parent.postMessage({ type: 'logout' }, '*');
+      }
+    }
+    
+    // 初始化CMS
+    document.addEventListener('DOMContentLoaded', function() {
+      const CMS = window.CMS;
+      
+      // 初始化CMS
+      CMS.init();
+      
+      // 监听CMS事件
+      setTimeout(function() {
+        // 尝试添加退出按钮
+        const cmsHeader = document.querySelector('.nc-appHeader');
+        if (cmsHeader) {
+          const logoutBtn = document.createElement('button');
+          logoutBtn.textContent = '退出';
+          logoutBtn.style.marginLeft = '10px';
+          logoutBtn.style.padding = '5px 10px';
+          logoutBtn.style.background = '#cb2431';
+          logoutBtn.style.color = 'white';
+          logoutBtn.style.border = 'none';
+          logoutBtn.style.borderRadius = '4px';
+          logoutBtn.style.cursor = 'pointer';
+          logoutBtn.onclick = sendLogout;
+          cmsHeader.appendChild(logoutBtn);
+        }
+      }, 1000);
+    });
   </script>
 </head>
 <body>
-  <noscript>
-    <p>请启用JavaScript以访问博客管理后台。</p>
-    <p><a href="/admin/simple-auth.html">点击这里手动跳转</a></p>
-  </noscript>
+  <!-- Netlify CMS将在这里自动渲染 -->
 </body>
 </html>

@@ -5,6 +5,20 @@ backend:
   auth_scope: repo
   squash_merges: true
   cms_label_prefix: "cms/"
+  
+  # 使用GitHub OAuth应用认证
+  # 需要在GitHub注册OAuth应用：
+  # 1. 访问 https://github.com/settings/developers
+  # 2. 点击"New OAuth App"
+  # 3. 填写信息：
+  #    - Application name: Hexo Blog CMS
+  #    - Homepage URL: https://johnlinlife.github.io
+  #    - Authorization callback URL: https://johnlinlife.github.io/admin/cms-simple.html
+  # 4. 复制Client ID和生成Client Secret
+  # 5. 取消下面的注释并填写
+  # app_id: "你的Client ID"
+  # auth_endpoint: "https://github.com/login/oauth/authorize"
+  # auth_type: implicit
 
 media_folder: "source/images"
 public_folder: "/images"

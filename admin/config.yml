@@ -4,6 +4,7 @@ backend:
   branch: main
   auth_scope: repo
   squash_merges: true
+  cms_label_prefix: "cms/"
 
 media_folder: "source/images"
 public_folder: "/images"

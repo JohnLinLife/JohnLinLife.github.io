@@ -75,11 +75,6 @@
       height: calc(100vh - 60px);
     }
     
-    /* 隐藏Netlify CMS的默认登录按钮 */
-    .nc-githubAuthenticationPage-button {
-      display: none !important;
-    }
-    
     /* 确保CMS容器正确显示 */
     .nc-root {
       height: 100% !important;
@@ -93,15 +88,17 @@
     .nc-markdownEditor-container {
       height: 100% !important;
     }
-  </style>
-  
-  <script>
-    // 检查token
-    const token = localStorage.getItem('github_token');
-    if (!token) {
-      window.location.href = '/admin/simple-auth.html';
+    
+    /* 隐藏默认的登录按钮 */
+    .nc-githubAuthenticationPage-button {
+      display: none !important;
     }
-  </script>
+    
+    /* 显示CMS内容 */
+    .nc-app {
+      display: block !important;
+    }
+  </style>
 </head>
 <body>
   <div class="header">
@@ -112,63 +109,87 @@
     <button class="logout-btn" onclick="logout()">退出登录</button>
   </div>
   
-  <div class="cms-container" id="cms-root"></div>
-  
-  <!-- Netlify CMS JS -->
-  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  <div class="cms-container">
+    <!-- Netlify CMS将在这里渲染 -->
+    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  </div>
   
   <script>
+    // 检查token
+    const token = localStorage.getItem('github_token');
+    if (!token) {
+      window.location.href = '/admin/simple-auth.html';
+    }
+    
     function logout() {
       localStorage.removeItem('github_token');
       window.location.href = '/admin/simple-auth.html';
     }
     
-    // 自定义GitHub认证
-    const originalAuthenticate = window.CMS.getBackend('github').authenticate;
-    
-    window.CMS.getBackend('github').authenticate = function() {
-      return Promise.resolve({
-        token: token,
-        provider: 'github'
-      });
-    };
-    
-    // 初始化CMS
+    // 配置Netlify CMS使用自定义认证
     document.addEventListener('DOMContentLoaded', function() {
       const CMS = window.CMS;
       
-      // 注册自定义GitHub认证
-      const originalBackend = CMS.getBackend('github');
-      if (originalBackend) {
-        const originalAuthenticate = originalBackend.authenticate;
-        originalBackend.authenticate = function() {
+      // 注册自定义GitHub后端
+      CMS.registerBackend('github-custom', {
+        authenticate: function() {
           return Promise.resolve({
             token: token,
             provider: 'github'
           });
-        };
-      }
+        },
+        
+        entries: function() {
+          // 使用原始的GitHub后端获取条目
+          const originalBackend = CMS.getBackend('github');
+          if (originalBackend && originalBackend.entries) {
+            return originalBackend.entries.apply(this, arguments);
+          }
+          return Promise.resolve([]);
+        },
+        
+        getEntry: function() {
+          const originalBackend = CMS.getBackend('github');
+          if (originalBackend && originalBackend.getEntry) {
+            return originalBackend.getEntry.apply(this, arguments);
+          }
+          return Promise.resolve({});
+        },
+        
+        persistEntry: function() {
+          const originalBackend = CMS.getBackend('github');
+          if (originalBackend && originalBackend.persistEntry) {
+            return originalBackend.persistEntry.apply(this, arguments);
+          }
+          return Promise.resolve();
+        },
+        
+        persistMedia: function() {
+          const originalBackend = CMS.getBackend('github');
+          if (originalBackend && originalBackend.persistMedia) {
+            return originalBackend.persistMedia.apply(this, arguments);
+          }
+          return Promise.resolve();
+        },
+        
+        deleteFile: function() {
+          const originalBackend = CMS.getBackend('github');
+          if (originalBackend && originalBackend.deleteFile) {
+            return originalBackend.deleteFile.apply(this, arguments);
+          }
+          return Promise.resolve();
+        }
+      });
       
-      // 初始化CMS（会自动加载admin/config.yml）
+      // 初始化CMS
       CMS.init();
       
-      // 将CMS渲染到指定容器
-      const cmsRoot = document.getElementById('cms-root');
-      if (cmsRoot) {
-        cmsRoot.appendChild(document.querySelector('.nc-root'));
-      }
-      
-      // 隐藏默认的登录界面
+      // 设置自定义后端
       setTimeout(function() {
-        const authPage = document.querySelector('.nc-githubAuthenticationPage-root');
-        if (authPage) {
-          authPage.style.display = 'none';
-        }
-        
-        // 显示CMS界面
-        const cmsInterface = document.querySelector('.nc-app');
-        if (cmsInterface) {
-          cmsInterface.style.display = 'block';
+        const config = CMS.getConfig();
+        if (config && config.backend) {
+          config.backend.name = 'github-custom';
+          console.log('使用自定义GitHub后端');
         }
       }, 100);
     });

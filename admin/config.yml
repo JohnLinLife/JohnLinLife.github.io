@@ -5,25 +5,17 @@ backend:
   auth_scope: repo
   squash_merges: true
 
-# 媒体文件存储位置
 media_folder: "source/images"
 public_folder: "/images"
 
-# 站点配置
 site_url: "https://johnlinlife.github.io"
 display_url: "https://johnlinlife.github.io"
 logo_url: "https://johnlinlife.github.io/img/avatar.jpg"
 
-# 本地后端（开发时使用）
-local_backend: true
-
-# 编辑器配置
 editor:
   preview: true
 
-# 集合配置
 collections:
-  # 文章集合
   - name: "posts"
     label: "文章"
     label_singular: "文章"
@@ -37,32 +29,14 @@ collections:
     fields:
       - { label: "标题", name: "title", widget: "string", required: true }
       - { label: "发布日期", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm:ss", required: true }
-      - { label: "更新时间", name: "updated", widget: "datetime", format: "YYYY-MM-DD HH:mm:ss", required: false }
       - { label: "标签", name: "tags", widget: "list", required: false, default: [] }
       - { label: "分类", name: "categories", widget: "list", required: false, default: [] }
       - { label: "置顶", name: "top", widget: "boolean", required: false, default: false }
       - { label: "摘要", name: "excerpt", widget: "text", required: false }
       - { label: "封面图", name: "cover", widget: "image", required: false }
       - { label: "文章内容", name: "body", widget: "markdown", required: true }
-    
-    # 文章模板
     default:
       layout: "post"
       date: "{{now}}"
       tags: []
       categories: []
-
-  # 页面集合（可选）
-  - name: "pages"
-    label: "页面"
-    label_singular: "页面"
-    folder: "source"
-    create: true
-    delete: true
-    extension: "md"
-    format: "frontmatter"
-    slug: "{{slug}}"
-    fields:
-      - { label: "标题", name: "title", widget: "string", required: true }
-      - { label: "布局", name: "layout", widget: "hidden", default: "page" }
-      - { label: "页面内容", name: "body", widget: "markdown", required: true }
